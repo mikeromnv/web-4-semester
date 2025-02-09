@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="form.js"></script>
+    <title>Romanov</title>
+</head>
+<body>
+    <div id="background-overlay"></div>
+    <button id="form-trigger">ФОРМА</button>
+    <div id="popup" class="modal-popup">
+        <form id="UserForm" class="ajaxForm" action="https://formcarry.com/s/jMVltZAXvKN" enctype="multipart/form-data" method="POST">
+            <label>
+                ФИО<br/>
+                <input name="user_name" />
+            </label><br/>
+            <label>
+                Телефон: <br>
+                <input name="user_phone" type="tel">
+            </label> <br>
+            <label>
+                Email:<br/>
+                <input name="user_email" type="email">
+            </label><br />
+
+            <label>
+                Дата рождения:<br />
+                <input name="field-date"
+                  value="2024-09-14"
+                  type="date"/>
+              </label><br />
+
+              Пол:<br />
+              <label><input type="radio" checked="checked"
+                name="radio-group-1" value="Male" />
+                Муж</label>
+              <label><input type="radio"
+                name="radio-group-1" value="Female" />
+                Жен</label><br />
+                <label>
+                
+                Ваш любимый язык программирования:
+                <br />
+                <select name="field-name-4[]"
+                multiple="multiple" style="width: 250px; height: 150px">
+                <option value="Pascal">Pascal</option>
+                <option value="C" selected="selected">C</option>
+                <option value="C++" selected="selected">C++</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="PHP">PHP</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="Haskel">Haskel</option>
+                <option value="Clojure">Clojure</option>
+                <option value="Prolog">Prolog</option>
+                <option value="Scala">Scala</option>
+                </select>
+            </label><br />
+            <p><b>Ваша биография:</b></p>
+            <p><textarea name="comment"></textarea></p>
+            
+          <label><input type="checkbox" 
+            name="check-1" />
+            С контрактом ознакомлен(a)</label><br />
+            <input name="submit_button" type="submit" value="Сохранить">
+        </form>
+    </div>
+</body>
+</html>

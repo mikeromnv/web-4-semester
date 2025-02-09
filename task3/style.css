@@ -1,0 +1,64 @@
+body {
+    background-image: url('./images/bckg.jpg');
+    background-size: cover;
+    margin: 0 auto;
+}
+
+#background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ccd5ae94;
+    z-index: 9998;
+    display: none;
+}
+
+#background-overlay.show {
+    display: block;
+}
+
+#popup {
+    max-height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 5px;
+    background: #f7e9e0b6;
+    box-shadow: 0 0 20px #adb3a9;
+    z-index: 9999;
+    display: none;
+}
+
+form {
+    max-height: fit-content;
+    text-align: center;
+}
+
+form label {
+    margin: 2vh;
+}
+
+form input, form select, form option, select, button {
+    border-radius: 15px;
+    margin: 2vh;
+}
+
+form, form input, form option, select {
+    font-size: 16pt;
+}
+
+form h2, form, form input, form option, select, button, textarea {
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 1px;
+    color: #000000e8;
+    font-weight: bold;
+}
+
+#form-trigger {
+    color: #6b0d0be8;
+    font-size: 35px;
+}
