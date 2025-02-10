@@ -50,7 +50,7 @@ if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
 }
 // EMAIL
 
-if (!empty($_POST["email"]) !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+if (!empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
    print('Ошибка: Введите корректный email.<br/>');
    $errors = TRUE;
 }
