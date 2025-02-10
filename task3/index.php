@@ -33,13 +33,13 @@ if (empty($_POST['fio'])) {
 else{
   // Проверка длины
     if (mb_strlen($fio) > 150) {
-      echo "Ошибка: ФИО не должно превышать 150 символов.<br>";
+      print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
       $errors = TRUE;
     }
 
   // Проверка на только буквы и пробелы (кириллица и латиница)
     elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ\s]+$/u", $fio)) {
-        echo "Ошибка: ФИО должно содержать только буквы и пробелы.<br>";
+        print("Ошибка: ФИО должно содержать только буквы и пробелы.<br>");
         $errors = TRUE;
     } 
 }
@@ -51,18 +51,21 @@ if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
 // EMAIL
 
 if (!empty($_POST["email"]) !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-  $errors[] = "Ошибка: Введите корректный email.";
+   print('Ошибка: Введите корректный email.<br/>');
+   $errors = TRUE;
 }
 
 // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
 $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
 $fav_languages = $_POST["favorite_languages"] ?? []; // Массив, если multiple select
 if (!is_array($fav_languages) || empty($fav_languages)) {
-    $errors[] = "Ошибка: Выберите хотя бы один язык программирования.";
+  print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
+  $errors = TRUE;
 } else {
     foreach ($fav_languages as $lang) {
         if (!in_array($lang, $allowed_languages)) {
-            $errors[] = "Ошибка: Найден недопустимый язык ($lang).";
+            print('Ошибка: Найден недопустимый язык ($lang).<br/>');
+            $errors = TRUE;
         }
     }
 }
@@ -83,6 +86,7 @@ elseif{
   $allowed_genders = ["Муж", "Жен"];
   if (!in_array($_POST['gender'], $allowed_genders)) {
     print('Ошибка: Выбран недопустимый пол.<br/>');
+    $errors = TRUE;
   }
 }
 // БИО ???
@@ -90,6 +94,7 @@ elseif{
 // С КОНТРАКТОМ ОЗНАКОМЛЕН
 if (!isset($_POST["contract"])) {
   print('Ошибка: Вы должны подтвердить ознакомление с контрактом.<br/>');
+  $errors = TRUE;
 }
 
 if ($errors) {
