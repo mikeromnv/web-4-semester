@@ -119,6 +119,28 @@ try {
   exit();
 }
 
+$user_id = $db->lastInsertId(); // ID последнего вставленного пользователя
+try{
+  $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
+  $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
+  
+  foreach ($fav_languages as $language) {
+      // Получаем ID языка программирования
+      $stmt->execute([$language]);
+      $language_id = $stmt->fetchColumn();
+      
+      if ($language_id) {
+          // Связываем пользователя с языком
+          $insert_stmt->execute([$user_id, $language_id]);
+      }
+  }
+}
+catch (PDOException $e) {
+  print('Ошибка БД: ' . $e->getMessage());
+  exit();
+}
+
+
 
 
 // try {
