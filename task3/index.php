@@ -32,13 +32,13 @@ if (empty($_POST['fio'])) {
 }
 else{
   // Проверка длины
-    if (mb_strlen($fio) > 150) {
+    if (mb_strlen($_POST['fio']) > 150) {
       print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
       $errors = TRUE;
     }
 
   // Проверка на только буквы и пробелы (кириллица и латиница)
-    elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ\s]+$/u", $fio)) {
+    elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ\s]+$/u", $_POST['fio'])) {
         print("Ошибка: ФИО должно содержать только буквы и пробелы.<br>");
         $errors = TRUE;
     } 
@@ -50,7 +50,7 @@ if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
 }
 // EMAIL
 
-if (!empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
    print('Ошибка: Введите корректный email.<br/>');
    $errors = TRUE;
 }
@@ -113,7 +113,7 @@ $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
 
 try {
   $stmt = $db->prepare("INSERT INTO users (name, phone, email, gender, year, biography, contract) VALUES (?, ?, ?, ?, ?, ?, ?)");
-  $stmt->execute([$fio, $phone, $email, $gender, $year, $biography, $_POST["contract"]]);
+  $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], $_POST["contract"]]);
 } catch (PDOException $e) {
   print('Ошибка БД: ' . $e->getMessage());
   exit();
