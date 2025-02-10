@@ -113,7 +113,7 @@ $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
 
 try {
   $stmt = $db->prepare("INSERT INTO users (full_name, phone, email, gender, birth_date, bio, contract_accepted) VALUES (?, ?, ?, ?, ?, ?, ?)");
-  $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], $_POST["contract"]]);
+  $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
 } catch (PDOException $e) {
   print('Ошибка БД: ' . $e->getMessage());
   exit();

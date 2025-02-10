@@ -4,7 +4,7 @@ CREATE TABLE users (
     phone VARCHAR(20) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     birth_date DATE NOT NULL,
-    gender ENUM('м', 'ж') NOT NULL,
+    gender ENUM('Male', 'Female') NOT NULL,
     bio TEXT,
     contract_accepted BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -21,3 +21,6 @@ CREATE TABLE user_languages (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (language_id) REFERENCES programming_languages(id) ON DELETE CASCADE
 );
+INSERT INTO programming_languages (name) VALUES
+('Pascal'), ('C'), ('C++'), ('JavaScript'), ('PHP'), ('Python'),
+('Java'), ('Haskell'), ('Clojure'), ('Prolog'), ('Scala'), ('Go');
