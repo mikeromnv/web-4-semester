@@ -82,7 +82,7 @@ if (empty($_POST['gender'])){
   print ('Зполните поле ПОЛ.<br/>');
   $errors = TRUE;
 }
-elseif{
+else{
   $allowed_genders = ["Муж", "Жен"];
   if (!in_array($_POST['gender'], $allowed_genders)) {
     print('Ошибка: Выбран недопустимый пол.<br/>');
