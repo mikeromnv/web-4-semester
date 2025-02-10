@@ -32,7 +32,7 @@ if (empty($_POST['fio'])) {
 }
 else{
   // Проверка длины
-    if (mb_strlen($_POST['fio']) > 150) {
+    if (strlen($_POST['fio']) > 150) {
       print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
       $errors = TRUE;
     }
