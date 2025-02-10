@@ -14,32 +14,32 @@
     <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО<br/>
-                <input name="user_name" />
+                <input name="fio" />
             </label><br/>
             <label>Телефон: <br>
-                <input name="user_phone" type="tel">
+                <input name="phone" type="tel">
             </label> <br>
             <label>Email:<br/>
-                <input name="user_email" type="email">
+                <input name="email" type="email">
             </label><br />
 
             <label>Дата рождения:<br />
-                <input  name="field-date"
+                <input  name="date"
                         value="2025-10-02"
                         type="date"/>
             </label><br />
 
             <label>Пол:<br />
                 <label><input type="radio" checked="checked"
-                    name="radio-group-1" value="Male" />
+                    name="gender" value="Male" />
                     Муж</label>
                 <label><input type="radio"
-                    name="radio-group-1" value="Female" />
+                    name="gender" value="Female" />
                     Жен</label><br />
             </label>
                 
             <label>Ваш любимый язык программирования:<br />
-                <select name="field-name-4[]"
+                <select name="favorite_languages[]"
                 multiple="multiple" style="width: 250px; height: 150px">
                 <option value="Pascal">Pascal</option>
                 <option value="C" selected="selected">C</option>
@@ -59,9 +59,9 @@
             
             
           <label><input type="checkbox" 
-            name="check-1" />
+            name="contract" />
             С контрактом ознакомлен(a)</label><br />
-            
+
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>

@@ -68,9 +68,10 @@ if (!is_array($fav_languages) || empty($fav_languages)) {
 }
 
 // ДАТА РОЖДЕНИЯ
-if (empty($_POST['year']) || !is_numeric($_POST['year']) || !preg_match('/^\d+$/', $_POST['year'])) {
-  print('Заполните год.<br/>');
-  $errors = TRUE;
+
+if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
+    print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
+    $errors = TRUE;
 }
 
 // ПОЛ
