@@ -112,7 +112,7 @@ $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
 // Подготовленный запрос. Не именованные метки.
 
 try {
-  $stmt = $db->prepare("INSERT INTO users (name, phone, email, gender, year, biography, contract) VALUES (?, ?, ?, ?, ?, ?, ?)");
+  $stmt = $db->prepare("INSERT INTO users (full_name, phone, email, gender, birth_date, biography, contract_accepted) VALUES (?, ?, ?, ?, ?, ?, ?)");
   $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], $_POST["contract"]]);
 } catch (PDOException $e) {
   print('Ошибка БД: ' . $e->getMessage());
