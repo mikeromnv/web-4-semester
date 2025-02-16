@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (!empty($_GET['save'])) {
     // Если есть параметр save, то выводим сообщение пользователю.
     //print('Спасибо, результаты сохранены.');
-    header('Location: success.php');
+    header('Location: success.html');
   }
   include('index.html');
   // Завершаем работу скрипта.
@@ -140,4 +140,4 @@ catch (PDOException $e) {
 // header('Location: ?save=1');
 
 // Перенаправление на страницу успешного сохранения
-//header('Location: success.php');
+//header('Location: success.html');
