@@ -9,13 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
   if (!empty($_GET['save'])) {
     // Если есть параметр save, то выводим сообщение пользователю.
-    print('Спасибо, результаты сохранены.');
+    //print('Спасибо, результаты сохранены.');
+    header('Location: success.php');
   }
-  // Включаем содержимое файла form.php.
-  //include('form.php');
-
   include('index.html');
-
   // Завершаем работу скрипта.
   exit();
 }
@@ -140,36 +137,7 @@ catch (PDOException $e) {
   exit();
 }
 
+// header('Location: ?save=1');
 
-
-
-// try {
-//   $stmt = $db->prepare("INSERT INTO users SET name = ?");
-//   $stmt->execute([$_POST['fio']]);
-// }
-// catch(PDOException $e){
-//   print('Error : ' . $e->getMessage());
-//   exit();
-// }
-
-//  stmt - это "дескриптор состояния".
- 
-//  Именованные метки.
-//$stmt = $db->prepare("INSERT INTO test (label,color) VALUES (:label,:color)");
-//$stmt -> execute(['label'=>'perfect', 'color'=>'green']);
- 
-//Еще вариант
-/*$stmt = $db->prepare("INSERT INTO users (firstname, lastname, email) VALUES (:firstname, :lastname, :email)");
-$stmt->bindParam(':firstname', $firstname);
-$stmt->bindParam(':lastname', $lastname);
-$stmt->bindParam(':email', $email);
-$firstname = "John";
-$lastname = "Smith";
-$email = "john@test.com";
-$stmt->execute();
-*/
-
-// Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
-header('Location: ?save=1');
+// Перенаправление на страницу успешного сохранения
+//header('Location: success.php');
