@@ -15,9 +15,13 @@ body {
     background: #f7e9e0b6;
     box-shadow: 0 0 20px #adb3a9;
     z-index: 9999;
-   
 }
-
+#notice{
+    font-size: 11px;
+    font-weight: bold;
+    color: #001970;
+    margin: 0;
+}
 form {
     max-height: fit-content;
     text-align: center;
@@ -25,8 +29,7 @@ form {
 
 
 form input, form select, form option, select, button {
-    
-    margin: 2vh;
+    margin: 1vh;
 }
 
 form, form input, form option, select {
