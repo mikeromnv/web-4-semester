@@ -86,8 +86,11 @@ else{
     $errors = TRUE;
   }
 }
-// БИО ???
-
+// БИО
+if (empty($_POST['biography'])) {
+  print('Заполните биографию.<br/>');
+  $errors = TRUE;
+}
 // С КОНТРАКТОМ ОЗНАКОМЛЕН
 if (!isset($_POST["contract"])) {
   print('Ошибка: Вы должны подтвердить ознакомление с контрактом.<br/>');
