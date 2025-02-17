@@ -1,17 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <style>
+/* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
+.error {
+  border: 2px solid red;
+}
+    </style>
     <link rel="stylesheet" href="style.css">
-    
-    <title>Romanov</title>
-</head>
-<body>
-    
-    <div id="form-menu" class="form-menu">
+  </head>
+  <body>
+
+<?php
+if (!empty($messages)) {
+  print('<div id="messages">');
+  // Выводим все сообщения.
+  foreach ($messages as $message) {
+    print($message);
+  }
+  print('</div>');
+}
+
+// Далее выводим форму отмечая элементы с ошибками классом error
+// и задавая начальные значения элементов ранее сохраненными.
+?>
+
+<div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО<br/>
                 <input name="fio" />
@@ -66,5 +79,5 @@
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>
-</body>
+  </body>
 </html>

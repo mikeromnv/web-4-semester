@@ -46,7 +46,6 @@ if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
   $errors = TRUE;
 }
 // EMAIL
-
 if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
    print('Ошибка: Введите корректный email.<br/>');
    $errors = TRUE;
@@ -68,7 +67,6 @@ if (!is_array($fav_languages) || empty($fav_languages)) {
 }
 
 // ДАТА РОЖДЕНИЯ
-
 if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
     print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
     $errors = TRUE;
