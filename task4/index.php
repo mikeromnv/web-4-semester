@@ -12,86 +12,160 @@ header('Content-Type: text/html; charset=UTF-8');
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  // Массив для временного хранения сообщений пользователю.
-  $messages = array();
+  // // Массив для временного хранения сообщений пользователю.
+  // $messages = array();
 
-  // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
-  // Выдаем сообщение об успешном сохранении.
-  if (!empty($_COOKIE['save'])) {
-    // Удаляем куку, указывая время устаревания в прошлом.
-    setcookie('save', '', 100000);
-    // Если есть параметр save, то выводим сообщение пользователю.
-    $messages[] = 'Спасибо, результаты сохранены.';
-  }
+  // // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
+  // // Выдаем сообщение об успешном сохранении.
+  // if (!empty($_COOKIE['save'])) {
+  //   // Удаляем куку, указывая время устаревания в прошлом.
+  //   setcookie('save', '', 100000);
+  //   // Если есть параметр save, то выводим сообщение пользователю.
+  //   $messages[] = 'Спасибо, результаты сохранены.';
+  // }
 
-  // Складываем признак ошибок в массив.
-  $errors = array();
-  $errors['fio'] = !empty($_COOKIE['fio_error']);
-  $errors['phone'] = !empty($_COOKIE['phone_error']);
-  $errors['email'] = !empty($_COOKIE['email_error']);
-  $errors['date'] = !empty($_COOKIE['date_error']);
-  $errors['gender'] = !empty($_COOKIE['gender_error']);
-  $errors['favorite_languages'] = !empty($_COOKIE['favorite_languages_error']);
-  $errors['biography'] = !empty($_COOKIE['biography_error']);
-  $errors['contract'] = !empty($_COOKIE['contract_error']);
+  // // Складываем признак ошибок в массив.
+  // $errors = array();
+  // $errors['fio'] = !empty($_COOKIE['fio_error']);
+  // $errors['phone'] = !empty($_COOKIE['phone_error']);
+  // $errors['email'] = !empty($_COOKIE['email_error']);
+  // $errors['date'] = !empty($_COOKIE['date_error']);
+  // $errors['gender'] = !empty($_COOKIE['gender_error']);
+  // $errors['favorite_languages'] = !empty($_COOKIE['favorite_languages_error']);
+  // $errors['biography'] = !empty($_COOKIE['biography_error']);
+  // $errors['contract'] = !empty($_COOKIE['contract_error']);
 
-  // Выдаем сообщения об ошибках.
-  if ($errors['fio']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('fio_error', '', 100000);
-    setcookie('fio_value', '', 100000);
-    // Выводим сообщение.
-    $messages['fio'] = '<div class="error">Заполните имя.</div>';
-  }
-  if ($errors['phone']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('phone_error', '', 100000);
-    setcookie('phone_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Заполните номер телефона.</div>';
-  }
-  if ($errors['email']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('email_error', '', 100000);
-    setcookie('email_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Укажите эллектронную почту.</div>';
-  }
-  if ($errors['date']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('date_error', '', 100000);
-    setcookie('date_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Укажите дату рождения.</div>';
-  }
-  if ($errors['gender']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('gender_error', '', 100000);
-    setcookie('gender_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Выберите пол.</div>';
-  }
-  if ($errors['favorite_languages']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('favorite_languages_error', '', 100000);
-    setcookie('favorite_languages_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Укажите Ваш любимый язык программирования.</div>';
-  }
-  if ($errors['biography']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('biography_error', '', 100000);
-    setcookie('biography_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Укажите биографию.</div>';
-  }
-  if ($errors['contract']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('contract_error', '', 100000);
-    setcookie('contract_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Ознакомьтесь с контрактом.</div>';
-  }
+  // // Выдаем сообщения об ошибках.
+  // if ($errors['fio']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('fio_error', '', 100000);
+  //   setcookie('fio_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Заполните имя.</div>';
+  // }
+  // if ($errors['phone']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('phone_error', '', 100000);
+  //   setcookie('phone_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Заполните номер телефона.</div>';
+  // }
+  // if ($errors['email']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('email_error', '', 100000);
+  //   setcookie('email_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Укажите эллектронную почту.</div>';
+  // }
+  // if ($errors['date']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('date_error', '', 100000);
+  //   setcookie('date_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Укажите дату рождения.</div>';
+  // }
+  // if ($errors['gender']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('gender_error', '', 100000);
+  //   setcookie('gender_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Выберите пол.</div>';
+  // }
+  // if ($errors['favorite_languages']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('favorite_languages_error', '', 100000);
+  //   setcookie('favorite_languages_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Укажите Ваш любимый язык программирования.</div>';
+  // }
+  // if ($errors['biography']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('biography_error', '', 100000);
+  //   setcookie('biography_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Укажите биографию.</div>';
+  // }
+  // if ($errors['contract']) {
+  //   // Удаляем куки, указывая время устаревания в прошлом.
+  //   setcookie('contract_error', '', 100000);
+  //   setcookie('contract_value', '', 100000);
+  //   // Выводим сообщение.
+  //   $messages[] = '<div class="error">Ознакомьтесь с контрактом.</div>';
+  // }
+   // Массив для временного хранения сообщений пользователю.
+   $messages = array();
+
+   // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
+   // Выдаем сообщение об успешном сохранении.
+   if (!empty($_COOKIE['save'])) {
+       // Удаляем куку, указывая время устаревания в прошлом.
+       setcookie('save', '', time() - 3600);
+       // Если есть параметр save, то выводим сообщение пользователю.
+       $messages['success'] = 'Спасибо, результаты сохранены.';
+   }
+
+   // Складываем признак ошибок в массив.
+   $errors = array();
+   $errors['fio'] = !empty($_COOKIE['fio_error']);
+   $errors['phone'] = !empty($_COOKIE['phone_error']);
+   $errors['email'] = !empty($_COOKIE['email_error']);
+   $errors['date'] = !empty($_COOKIE['date_error']);
+   $errors['gender'] = !empty($_COOKIE['gender_error']);
+   $errors['favorite_languages'] = !empty($_COOKIE['favorite_languages_error']);
+   $errors['biography'] = !empty($_COOKIE['biography_error']);
+   $errors['contract'] = !empty($_COOKIE['contract_error']);
+
+   // Массив для хранения текстов ошибок, которые будут выводиться рядом с полями.
+   $messages = array();
+
+   if ($errors['fio']) {
+       setcookie('fio_error', '', time() - 3600);
+       setcookie('fio_value', '', time() - 3600);
+       $messages['fio'] = 'Заполните имя.';
+   }
+
+   if ($errors['phone']) {
+       setcookie('phone_error', '', time() - 3600);
+       setcookie('phone_value', '', time() - 3600);
+       $messages['phone'] = 'Введите корректный номер телефона.';
+   }
+
+   if ($errors['email']) {
+       setcookie('email_error', '', time() - 3600);
+       setcookie('email_value', '', time() - 3600);
+       $messages['email'] = 'Введите корректный email.';
+   }
+
+   if ($errors['date']) {
+       setcookie('date_error', '', time() - 3600);
+       setcookie('date_value', '', time() - 3600);
+       $messages['date'] = 'Выберите дату рождения.';
+   }
+
+   if ($errors['gender']) {
+       setcookie('gender_error', '', time() - 3600);
+       setcookie('gender_value', '', time() - 3600);
+       $messages['gender'] = 'Выберите пол.';
+   }
+
+   if ($errors['favorite_languages']) {
+       setcookie('favorite_languages_error', '', time() - 3600);
+       setcookie('favorite_languages_value', '', time() - 3600);
+       $messages['favorite_languages'] = 'Выберите хотя бы один язык программирования.';
+   }
+
+   if ($errors['biography']) {
+       setcookie('biography_error', '', time() - 3600);
+       setcookie('biography_value', '', time() - 3600);
+       $messages['biography'] = 'Заполните биографию.';
+   }
+
+   if ($errors['contract']) {
+       setcookie('contract_error', '', time() - 3600);
+       setcookie('contract_value', '', time() - 3600);
+       $messages['contract'] = 'Вы должны согласиться с условиями.';
+   }
+}
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -105,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
   $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
 
-
+  
 
   // TODO: аналогично все поля.
 
