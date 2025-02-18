@@ -1,6 +1,5 @@
 <html>
   <head>
-    
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -23,7 +22,8 @@ if (!empty($messages)) {
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО<br/>
               <input type="text" name="fio" value="<?php echo htmlspecialchars($values['fio']); ?>">
-              <span class="error"><?php echo $errors['fio'] ?? ''; ?></span>
+              <span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?>
+              </span>
             </label><br/>
             <label>Телефон: <br>
                 <input name="phone" type="tel">
