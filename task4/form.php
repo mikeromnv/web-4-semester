@@ -62,7 +62,7 @@ if (!empty($messages)) {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="Java">Java</option>
-                <option value="Haskel">Haskel</option>
+                <option value="Haskell">Haskell</option>
                 <option value="Clojure">Clojure</option>
                 <option value="Prolog">Prolog</option>
                 <option value="Scala">Scala</option>

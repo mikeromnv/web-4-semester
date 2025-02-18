@@ -153,21 +153,26 @@ else {
   setcookie('email_value', $_POST['email'], time() + 30 * 24 * 60 * 60);
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
   $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
-  $fav_languages = $_POST["favorite_languages"] ?? []; // Массив, если multiple select
+  $fav_languages = $_POST["favorite_languages"] ?? []; // Получаем массив из формы
+  $errors = false; // Объявляем переменную заранее
+
   if (!is_array($fav_languages) || empty($fav_languages)) {
-    print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
-    setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+      print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
+      setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
+      $errors = true;
   } else {
       foreach ($fav_languages as $lang) {
           if (!in_array($lang, $allowed_languages)) {
-              print('Ошибка: Найден недопустимый язык ($lang).<br/>');
+              print("Ошибка: Найден недопустимый язык ($lang).<br/>");
               setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-              $errors = TRUE;
+              $errors = true;
           }
       }
   }
-  setcookie('favorite_languages_value', $_POST['favorite_languages'], time() + 30 * 24 * 60 * 60);
+
+  // Сохраняем массив языков в куки, преобразовав его в строку через запятую
+  setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 30 * 24 * 60 * 60);
+
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
     print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
