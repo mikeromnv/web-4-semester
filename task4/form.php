@@ -21,23 +21,24 @@ if (!empty($messages)) {
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО<br/>
-              <input type="text" name="fio" value="<?php echo htmlspecialchars($values['fio']); ?>">
-              <span class="error"><?php echo isset($errors['fio']) ? $errors['fio'] : ''; ?>
+              <input type="text" name="fio" value="<?= $_COOKIE['fio_value'] ?? '' ?>">
+              <span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?>
               </span>
             </label><br/>
             <label>Телефон: <br>
-                <input name="phone" type="tel">
+                <input name="phone" type="tel" value="<?= $_COOKIE['phone_value'] ?? '' ?>">
                 <p class="notice">*вместе с кодом страны (10 цифр)</p>
             </label> <br>
             <label>Email:<br/>
-                <input name="email" type="email">
+                <input name="email" type="email" value="<?= $_COOKIE['email_value'] ?? '' ?>">
             </label><br />
 
             <label>Дата рождения:<br />
-                <input  name="date"
-                        value="2025-10-02"
-                        type="date"/>
+                    <input name="date"
+                            value="<?= $_COOKIE['date_value'] ?? date('Y-m-d') ?>"
+                            type="date"/>
             </label><br />
+
 
             <label>Пол:<br />
                 <label><input type="radio"
