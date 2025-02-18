@@ -1,11 +1,6 @@
 <html>
   <head>
-    <style>
-/* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
-.error {
-  border: 2px solid red;
-}
-    </style>
+    
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -44,7 +39,7 @@ if (!empty($messages)) {
             </label><br />
 
             <label>Пол:<br />
-                <label><input type="radio" checked="checked"
+                <label><input type="radio"
                     name="gender" value="Male" />
                     Муж</label>
                 <label><input type="radio"
