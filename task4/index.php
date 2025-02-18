@@ -104,6 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['favorite_languages'] = empty($_COOKIE['favorite_languages_value']) ? '' : $_COOKIE['favorite_languages_value'];
   $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
   $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
+
+  
+
   // TODO: аналогично все поля.
 
   // Включаем содержимое файла form.php.
@@ -123,7 +126,7 @@ else {
   else{
     // Проверка длины
       if (strlen($_POST['fio']) > 150) {
-        print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
+        //print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
         setcookie('fio_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
       }
@@ -139,14 +142,14 @@ else {
   setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
   // ТЕЛЕФОН
   if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
-    print('Введите корректный номер телефона.<br/>');
+    //print('Введите корректный номер телефона.<br/>');
     setcookie('phone_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
   // EMAIL
   if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-    print('Ошибка: Введите корректный email.<br/>');
+    //print('Ошибка: Введите корректный email.<br/>');
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
@@ -157,13 +160,13 @@ else {
   $errors = false; // Объявляем переменную заранее
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
-      print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
+      //print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
       setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
       $errors = true;
   } else {
       foreach ($fav_languages as $lang) {
           if (!in_array($lang, $allowed_languages)) {
-              print("Ошибка: Найден недопустимый язык ($lang).<br/>");
+              //print("Ошибка: Найден недопустимый язык ($lang).<br/>");
               setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
               $errors = true;
           }
@@ -175,21 +178,21 @@ else {
 
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
-    print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
+    //print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
     setcookie('date_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('date_value', $_POST['date'], time() + 30 * 24 * 60 * 60);
   // ПОЛ
   if (empty($_POST['gender'])){
-    print ('Зполните поле ПОЛ.<br/>');
+    //print ('Зполните поле ПОЛ.<br/>');
     setcookie('gender_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   else{
     $allowed_genders = ["Male", "Female"];
     if (!in_array($_POST['gender'], $allowed_genders)) {
-      print('Ошибка: Выбран недопустимый пол.<br/>');
+      //print('Ошибка: Выбран недопустимый пол.<br/>');
       setcookie('gender_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
@@ -197,14 +200,14 @@ else {
   setcookie('gender_value', $_POST['gender'], time() + 30 * 24 * 60 * 60);
   // БИО
   if (empty($_POST['biography'])) {
-    print('Заполните биографию.<br/>');
+    //print('Заполните биографию.<br/>');
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('biography_value', $_POST['biography'], time() + 30 * 24 * 60 * 60);
   // С КОНТРАКТОМ ОЗНАКОМЛЕН
   if (!isset($_POST["contract"])) {
-    print('Ошибка: Вы должны подтвердить ознакомление с контрактом.<br/>');
+    //print('Ошибка: Вы должны подтвердить ознакомление с контрактом.<br/>');
     setcookie('contract_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }

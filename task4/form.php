@@ -22,7 +22,8 @@ if (!empty($messages)) {
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО<br/>
-                <input name="fio" />
+              <input type="text" name="fio" value="<?php echo htmlspecialchars($values['fio']); ?>">
+              <span class="error"><?php echo $errors['fio'] ?? ''; ?></span>
             </label><br/>
             <label>Телефон: <br>
                 <input name="phone" type="tel">
