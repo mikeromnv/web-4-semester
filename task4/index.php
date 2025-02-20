@@ -173,7 +173,7 @@ else {
   }
   setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
   // EMAIL
-  $email=trim($_POST['field-email']);
+  $email=trim($_POST['email']);
   if (emailExists($email, $db)) { // Используйте ваше соединение с БД!
     print("Этот email уже зарегистрирован.<br/>");
     $errors = TRUE;
