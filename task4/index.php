@@ -208,6 +208,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 else {
+  $user = 'u68604'; // Заменить на ваш логин uXXXXX
+  $pass = '5411397'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
   // Проверяем ошибки.
   $errors = FALSE;
   if (empty($_POST['fio'])) {
