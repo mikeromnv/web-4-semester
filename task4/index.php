@@ -80,7 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    if ($errors['email']) {
        setcookie('email_error', '', time() - 3600);
        setcookie('email_value', '', time() - 3600);
-       $messages['email'] = 'Введите корректный email.';
+       if ($_COOKIE['email_error']==2){
+        $messages['email'] = 'Такой email уже зарегистрирован.';
+       }
+       else{
+        $messages['email'] = 'Введите корректный email.';
+       }
    }
 
    if ($errors['date']) {
@@ -142,25 +147,25 @@ else {
   $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
   // Проверяем ошибки.
-  $errors = FALSE;
+  $errors_validate = FALSE;
   if (empty($_POST['fio'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   else{
     // Проверка длины
       if (strlen($_POST['fio']) > 150) {
         //print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
         setcookie('fio_error', '1', time() + 24 * 60 * 60);
-        $errors = TRUE;
+        $errors_validate = TRUE;
       }
   
     // Проверка на только буквы и пробелы (кириллица и латиница)
       elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ\s]+$/u", $_POST['fio'])) {
           print("Ошибка: ФИО должно содержать только буквы и пробелы.<br>");
           setcookie('fio_error', '1', time() + 24 * 60 * 60);
-          $errors = TRUE;
+          $errors_validate = TRUE;
       } 
   }
   // Сохраняем ранее введенное в форму значение на месяц.
@@ -169,34 +174,32 @@ else {
   if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
     //print('Введите корректный номер телефона.<br/>');
     setcookie('phone_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (emailExists($email, $db)) { // Используйте ваше соединение с БД!
-    print("Этот email уже зарегистрирован.<br/>");
-    setcookie('email_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+  if (emailExists($email, $db)) { 
+    setcookie('email_error', '2', time() + 24 * 60 * 60);
+    $errors_validate = TRUE;
   }
   elseif (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   setcookie('email_value', $_POST['email'], time() + 30 * 24 * 60 * 60);
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
   $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
   $fav_languages = $_POST["favorite_languages"] ?? []; // Получаем массив из формы
-  // $errors = false; // Объявляем переменную заранее
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
       setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-      $errors = true;
+      $errors_validate = true;
   } else {
       foreach ($fav_languages as $lang) {
           if (!in_array($lang, $allowed_languages)) {
               setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-              $errors = true;
+              $errors_validate = true;
           }
       }
   }
@@ -207,32 +210,32 @@ else {
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
     setcookie('date_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   setcookie('date_value', $_POST['date'], time() + 30 * 24 * 60 * 60);
   // ПОЛ
   if (empty($_POST['gender'])){
     setcookie('gender_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   else{
     $allowed_genders = ["Male", "Female"];
     if (!in_array($_POST['gender'], $allowed_genders)) {
       setcookie('gender_error', '1', time() + 24 * 60 * 60);
-      $errors = TRUE;
+      $errors_validate = TRUE;
     }
   }
   setcookie('gender_value', $_POST['gender'], time() + 30 * 24 * 60 * 60);
   // БИО
   if (empty($_POST['biography'])) {
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   setcookie('biography_value', $_POST['biography'], time() + 30 * 24 * 60 * 60);
   // С КОНТРАКТОМ ОЗНАКОМЛЕН
   if (!isset($_POST["contract"])) {
     setcookie('contract_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+    $errors_validate = TRUE;
   }
   setcookie('contract_value', $_POST['contract'], time() + 30 * 24 * 60 * 60);
 // *************
@@ -240,7 +243,7 @@ else {
 // Сохранить в Cookie признаки ошибок и значения полей.
 // *************
 
-  if ($errors) {
+  if ($errors_validate) {
     // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
     header('Location: index.php');
     exit();
