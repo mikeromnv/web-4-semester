@@ -8,7 +8,25 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function emailExists($email, $pdo) {
 
+  $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
+  $stmt = $pdo->prepare($sql);
+  if ($stmt === false) {
+    error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
+    return true; 
+  }
+  $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+  if (!$stmt->execute()) {
+    error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+    return true; 
+  }
+  // 4. Получение результата запроса.
+  $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+  $stmt->closeCursor();
+  // 6. Возврат true, если email найден в базе, иначе false.
+  return $count > 0;
+}
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -222,6 +240,11 @@ else {
   }
   setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
   // EMAIL
+  if (emailExists($email, $db)) { // Используйте ваше соединение с БД!
+    print("Этот email уже зарегистрирован.<br/>");
+    $errors = TRUE;
+  }
+  $email=trim($_POST['field-email']);
   if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     //print('Ошибка: Введите корректный email.<br/>');
     setcookie('email_error', '1', time() + 24 * 60 * 60);
