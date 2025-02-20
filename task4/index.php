@@ -176,10 +176,10 @@ else {
   $email=trim($_POST['email']);
   if (emailExists($email, $db)) { // Используйте ваше соединение с БД!
     print("Этот email уже зарегистрирован.<br/>");
+    setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
-  if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-    //print('Ошибка: Введите корректный email.<br/>');
+  else (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
@@ -190,13 +190,11 @@ else {
   $errors = false; // Объявляем переменную заранее
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
-      //print('Ошибка: Выберите хотя бы один язык программирования.<br/>');
       setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
       $errors = true;
   } else {
       foreach ($fav_languages as $lang) {
           if (!in_array($lang, $allowed_languages)) {
-              //print("Ошибка: Найден недопустимый язык ($lang).<br/>");
               setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
               $errors = true;
           }
@@ -208,21 +206,18 @@ else {
 
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
-    //print("Ошибка: Введите корректную дату рождения в формате ГГГГ-ММ-ДД.<br>");
     setcookie('date_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('date_value', $_POST['date'], time() + 30 * 24 * 60 * 60);
   // ПОЛ
   if (empty($_POST['gender'])){
-    //print ('Заполните поле ПОЛ.<br/>');
     setcookie('gender_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   else{
     $allowed_genders = ["Male", "Female"];
     if (!in_array($_POST['gender'], $allowed_genders)) {
-      //print('Ошибка: Выбран недопустимый пол.<br/>');
       setcookie('gender_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
@@ -230,14 +225,12 @@ else {
   setcookie('gender_value', $_POST['gender'], time() + 30 * 24 * 60 * 60);
   // БИО
   if (empty($_POST['biography'])) {
-    //print('Заполните биографию.<br/>');
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('biography_value', $_POST['biography'], time() + 30 * 24 * 60 * 60);
   // С КОНТРАКТОМ ОЗНАКОМЛЕН
   if (!isset($_POST["contract"])) {
-    //print('Ошибка: Вы должны подтвердить ознакомление с контрактом.<br/>');
     setcookie('contract_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
@@ -304,8 +297,6 @@ else {
   }
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
-
   // Делаем перенаправление.
-  //header('Location: index.php');
   header('Location: success.html');
 }
