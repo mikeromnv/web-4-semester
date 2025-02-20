@@ -187,7 +187,7 @@ else {
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
   $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
   $fav_languages = $_POST["favorite_languages"] ?? []; // Получаем массив из формы
-  $errors = false; // Объявляем переменную заранее
+  // $errors = false; // Объявляем переменную заранее
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
       setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
