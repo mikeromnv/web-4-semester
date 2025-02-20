@@ -10,7 +10,7 @@
 header('Content-Type: text/html; charset=UTF-8');
 function emailExists($email, $pdo) {
 
-  $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
+  $sql = "SELECT COUNT(*) FROM users WHERE email = :email"; 
   $stmt = $pdo->prepare($sql);
   if ($stmt === false) {
     error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
@@ -134,7 +134,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    $errors['contract'] = !empty($_COOKIE['contract_error']);
 
    // Массив для хранения текстов ошибок, которые будут выводиться рядом с полями.
-   $messages = array();
+   $messages = array(
+      'fio' => '',
+      'phone' => '',
+      'email' => '',
+      'date' => '',
+      'gender' => '',
+      'favorite_languages' => '',
+      'biography' => '',
+      'contract' => ''
+  );
 
    if ($errors['fio']) {
        setcookie('fio_error', '', time() - 3600);
