@@ -6,41 +6,41 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-            <label>ФИО<br/>
+            <label>ФИО <span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
               value="<?= $_COOKIE['fio_value'] ?? '' ?>" 
-              class="<?= isset($errors['fio']) ? 'if_error' : '' ?>">
+              class="<?= isset($errors['fio']) ? 'if_error' : 'no_errors' ?>">
             </label><br/>
-            <span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span>
+            
 
-            <label>Телефон: <br>
+            <label>Телефон <span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
                 <input name="phone" 
                 type="tel" 
                 value="<?= $_COOKIE['phone_value'] ?? '' ?>" 
-                class="<?= isset($errors['phone']) ? 'if_error' : '' ?>">
-                <p class="notice">**используйте телефонный код +7</p>
+                class="<?= isset($errors['phone']) ? 'if_error' : 'no_errors' ?>">
+                <p class="notice">*используйте телефонный код +7</p>
                 
             </label> <br>
-            <span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span>
-            <label>Email:<br/>
+            
+            <label>Email <span class="error"><?php echo isset($errors['email']) ? $messages['email'] : ''; ?></span><br/>
                 <input name="email" 
                 type="email" 
                 value="<?= $_COOKIE['email_value'] ?? '' ?>" 
-                class="<?= isset($errors['email']) ? 'if_error' : '' ?>">
+                class="<?= isset($errors['email']) ? 'if_error' : 'no_errors' ?>">
                 
             </label><br />
-            <span class="error"><?php echo isset($errors['email']) ? $messages['email'] : ''; ?></span>
-            <label>Дата рождения:<br />
+            
+            <label>Дата рождения <span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?></span><br />
                     <input name="date"
                             value="<?= $_COOKIE['date_value'] ?? date('Y-m-d') ?>" 
-                            class="<?= isset($errors['date']) ? 'if_error' : '' ?>"
+                            class="<?= isset($errors['date']) ? 'if_error' : 'no_errors' ?>"
                             type="date"/>
-                    <span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?></span>
+                    
             </label><br />
 
 
-            <label>Пол:<br />
+            <label>Пол <span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?></span><br />
                 <label><input 
                 type="radio"
                 name="gender" 
@@ -51,13 +51,13 @@
                 name="gender" 
                 value="Female" <?= (isset($_COOKIE['gender_value']) && $_COOKIE['gender_value'] === 'Female') ? 'checked' : ''; ?> />
                     Жен</label><br />
-                <span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?></span>
+                
             </label>
             
-            <label>Ваш любимый язык программирования:<br />
+            <label>Ваш любимый язык программирования <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
                 <select 
                 name="favorite_languages[]" 
-                class="<?= isset($errors['favorite_languages']) ? 'if_error' : '' ?>"
+                class="<?= isset($errors['favorite_languages']) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
                     $languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala"];
@@ -69,25 +69,25 @@
                     }
                     ?>
                 </select>
-                <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span>
+                
             </label><br />
 
-            <label><p><b>Ваша биография:</b></p>
+            <label><p><b>Ваша биография <span class="error"><?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?>  </span></b></p>
                 <p> <textarea 
                 name="biography"  
-                class="<?= isset($errors['biography']) ? 'if_error' : '' ?>"><?= $_COOKIE['biography_value'] ?? ''; ?></textarea> </p>
-                <span class="error"><?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?>  </span>
+                class="<?= isset($errors['biography']) ? 'if_error' : 'no_errors' ?>"><?= $_COOKIE['biography_value'] ?? ''; ?></textarea> </p>
+                
             </label>
             
             
           <label><input 
             type="checkbox"  
             name="contract" <?= !empty($_COOKIE['contract_value']) ? 'checked' : ''; ?> 
-            class="<?= isset($errors['contract']) ? 'if_error' : '' ?>" />
+            class="<?= isset($errors['contract']) ? 'if_error' : 'no_errors' ?>" />
             С контрактом ознакомлен(a)
-            <span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br /></span>
-          </label> 
             
+          </label> 
+            <span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br /></span>
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>
