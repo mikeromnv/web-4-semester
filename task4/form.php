@@ -6,7 +6,7 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-            <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
+            <label>ФИО <span class="error"><?php echo isset($errors['fio']) ? (nl2br)$messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
               value="<?= $_COOKIE['fio_value'] ?? '' ?>" 
@@ -14,7 +14,7 @@
             </label><br/>
             
 
-            <label>Телефон <br /><span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
+            <label>Телефон <span class="error"><?php echo isset($errors['phone']) ? (nl2br)$messages['phone'] : ''; ?></span><br>
                 <input name="phone" 
                 type="tel" 
                 value="<?= $_COOKIE['phone_value'] ?? '' ?>" 
@@ -57,7 +57,7 @@
             <label>Ваш любимый язык программирования <br /><span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
                 <select 
                 name="favorite_languages[]" 
-                class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>">
+                class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
                     $languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala"];
