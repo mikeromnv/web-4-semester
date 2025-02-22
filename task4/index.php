@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
        setcookie('fio_error', '', time() - 3600);
        setcookie('fio_value', '', time() - 3600);
        if ($_COOKIE['fio_error']==2){
-        $messages['fio'] = '\nФИО должно быть короче 150 символов';
+        $messages['fio'] = '<br>ФИО должно быть короче 150 символов';
        }
        if ($_COOKIE['fio_error']==3){
-        $messages['fio'] = '\nФИО может содержать только только буквы и пробелы';
+        $messages['fio'] = '<br>ФИО может содержать только только буквы и пробелы';
        }
        else{
-        $messages['fio'] = '\nЗаполните имя.';
+        $messages['fio'] = '<br>Заполните имя.';
        }
        
    }
@@ -83,48 +83,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    if ($errors['phone']) {
        setcookie('phone_error', '', time() - 3600);
        setcookie('phone_value', '', time() - 3600);
-       $messages['phone'] = '\nВведите корректный номер телефона.';
+       $messages['phone'] = '<br>Введите корректный номер телефона.';
    }
 
    if ($errors['email']) {
        setcookie('email_error', '', time() - 3600);
        setcookie('email_value', '', time() - 3600);
        if ($_COOKIE['email_error']==2){
-        $messages['email'] = '\nТакой email уже зарегистрирован.';
+        $messages['email'] = '<br>Такой email уже зарегистрирован.';
        }
        else{
-        $messages['email'] = '\nВведите корректный email.';
+        $messages['email'] = '<br>Введите корректный email.';
        }
    }
 
    if ($errors['date']) {
        setcookie('date_error', '', time() - 3600);
        setcookie('date_value', '', time() - 3600);
-       $messages['date'] = '\nВыберите дату рождения.';
+       $messages['date'] = '<br>Выберите дату рождения.';
    }
 
    if ($errors['gender']) {
        setcookie('gender_error', '', time() - 3600);
        setcookie('gender_value', '', time() - 3600);
-       $messages['gender'] = '\nВыберите пол.';
+       $messages['gender'] = '<br>Выберите пол.';
    }
 
    if ($errors['favorite_languages']) {
        setcookie('favorite_languages_error', '', time() - 3600);
        setcookie('favorite_languages_value', '', time() - 3600);
-       $messages['favorite_languages'] = '\nВыберите хотя бы один язык программирования.';
+       $messages['favorite_languages'] = '<br>Выберите хотя бы один язык программирования.';
    }
 
    if ($errors['biography']) {
        setcookie('biography_error', '', time() - 3600);
        setcookie('biography_value', '', time() - 3600);
-       $messages['biography'] = '\nЗаполните биографию.';
+       $messages['biography'] = '<br>Заполните биографию.';
    }
 
    if ($errors['contract']) {
        setcookie('contract_error', '', time() - 3600);
        setcookie('contract_value', '', time() - 3600);
-       $messages['contract'] = '\nВы должны согласиться с условиями.';
+       $messages['contract'] = '<br>Вы должны согласиться с условиями.';
    }
 
   // TODO: тут выдать сообщения об ошибках в других полях.
