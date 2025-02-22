@@ -95,8 +95,10 @@ if (!empty($messages)) {
             
           <label><input type="checkbox" 
             name="contract" <?= !empty($_COOKIE['contract_value']) ? 'checked' : ''; ?> />
-            С контрактом ознакомлен(a)</label><br />
-            <span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  
+            С контрактом ознакомлен(a)
+            <span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br />
+          </label> 
+            
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>

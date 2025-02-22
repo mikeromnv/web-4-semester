@@ -188,23 +188,23 @@ else {
     $errors_validate = TRUE;
   }
   setcookie('email_value', $_POST['email'], time() + 30 * 24 * 60 * 60);
+
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
   $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
   $fav_languages = $_POST["favorite_languages"] ?? []; // Получаем массив из формы
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
-      setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-      $errors_validate = true;
-  } else {
+      setcookie('favorite_languages_error', '1', time() + 24 * 60 * 60);
+      $errors_validate = TRUE;
+  } 
+  else {
       foreach ($fav_languages as $lang) {
           if (!in_array($lang, $allowed_languages)) {
-              setcookie('fav_languages_error', '1', time() + 24 * 60 * 60);
-              $errors_validate = true;
+              setcookie('favorite_languages_error', '1', time() + 24 * 60 * 60);
+              $errors_validate = TRUE;
           }
       }
   }
-
-  // Сохраняем массив языков в куки, преобразовав его в строку через запятую
   setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 30 * 24 * 60 * 60);
 
   // ДАТА РОЖДЕНИЯ
