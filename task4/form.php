@@ -6,19 +6,19 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-            <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
+            <label>ФИО <span class="error"><?php echo isset($errors['fio']) ? <br />$messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
               value="<?= $_COOKIE['fio_value'] ?? '' ?>" 
-              class="<?= isset($errors['fio']) ? 'if_error' : 'no_errors' ?>">
+              class="<?= (!empty($errors['fio'])) ? 'if_error' : 'no_errors' ?>">
             </label><br/>
             
 
-            <label>Телефон <br /><span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
+            <label>Телефон <span class="error"><?php echo isset($errors['phone']) ? <br />$messages['phone'] : ''; ?></span><br>
                 <input name="phone" 
                 type="tel" 
                 value="<?= $_COOKIE['phone_value'] ?? '' ?>" 
-                class="<?= (!empty($errors['fio'])) ? 'if_error' : 'no_errors' ?>">
+                class="<?= (!empty($errors['phone'])) ? 'if_error' : 'no_errors' ?>">
                 <p class="notice">*используйте телефонный код +7</p>
                 
             </label> <br>
@@ -34,13 +34,13 @@
             <label>Дата рождения <br /><span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?></span><br />
                     <input name="date"
                             value="<?= $_COOKIE['date_value'] ?? date('Y-m-d') ?>" 
-                            class="<?= (!empty($errors['date'])) ? 'if_error' : 'no_errors' ?>">
+                            class="<?= (!empty($errors['date'])) ? 'if_error' : 'no_errors' ?>"
                             type="date"/>
                     
             </label><br />
 
 
-            <label>Пол <br /><span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?></span><br />
+            <label>Пол <br/><span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?></span><br />
                 <label><input 
                 type="radio"
                 name="gender" 
