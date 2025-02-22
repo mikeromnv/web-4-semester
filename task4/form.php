@@ -39,6 +39,7 @@ if (!empty($messages)) {
                     <input name="date"
                             value="<?= $_COOKIE['date_value'] ?? date('Y-m-d') ?>"
                             type="date"/>
+                    <span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?>
             </label><br />
 
 
@@ -49,6 +50,7 @@ if (!empty($messages)) {
                 <label><input type="radio"
                 name="gender" value="Female" <?= (isset($_COOKIE['gender_value']) && $_COOKIE['gender_value'] === 'Female') ? 'checked' : ''; ?> />
                     Жен</label><br />
+                <span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?>
             </label>
             <!--    
             <label>Ваш любимый язык программирования:<br />
@@ -82,16 +84,19 @@ if (!empty($messages)) {
                     }
                     ?>
                 </select>
+                <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?>
             </label><br />
 
             <label><p><b>Ваша биография:</b></p>
-            <p><textarea name="biography"><?= $_COOKIE['biography_value'] ?? ''; ?></textarea></p> </label>
+                <p><textarea name="biography"><?= $_COOKIE['biography_value'] ?? ''; ?></textarea></p>
+                <span class="error"><?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?>  
+            </label>
             
             
           <label><input type="checkbox" 
             name="contract" <?= !empty($_COOKIE['contract_value']) ? 'checked' : ''; ?> />
             С контрактом ознакомлен(a)</label><br />
-
+            <span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>
