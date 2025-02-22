@@ -68,7 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    if ($errors['fio']) {
        setcookie('fio_error', '', time() - 3600);
        setcookie('fio_value', '', time() - 3600);
-       $messages['fio'] = 'Заполните имя.';
+       if ($_COOKIE['fio_error']==2){
+        $messages['fio'] = 'ФИО должно быть короче 150 символов';
+       }
+       if ($_COOKIE['fio_error']==3){
+        $messages['fio'] = 'ФИО может содержать только только буквы и пробелы';
+       }
+       else{
+        $messages['fio'] = 'Заполните имя.';
+       }
+       
    }
 
    if ($errors['phone']) {
@@ -156,15 +165,13 @@ else {
   else{
     // Проверка длины
       if (strlen($_POST['fio']) > 150) {
-        //print( "Ошибка: ФИО не должно превышать 150 символов.<br>");
-        setcookie('fio_error', '1', time() + 24 * 60 * 60);
+        setcookie('fio_error', '2', time() + 24 * 60 * 60);
         $errors_validate = TRUE;
       }
   
     // Проверка на только буквы и пробелы (кириллица и латиница)
       elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ\s]+$/u", $_POST['fio'])) {
-          print("Ошибка: ФИО должно содержать только буквы и пробелы.<br>");
-          setcookie('fio_error', '1', time() + 24 * 60 * 60);
+          setcookie('fio_error', '3', time() + 24 * 60 * 60);
           $errors_validate = TRUE;
       } 
   }
@@ -172,7 +179,6 @@ else {
   setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
   // ТЕЛЕФОН
   if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
-    //print('Введите корректный номер телефона.<br/>');
     setcookie('phone_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }

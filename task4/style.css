@@ -2,14 +2,19 @@
     
     text-align: center;
     width: 400px;
-    background: #e11f1fc4;
+    background: #e62424c4;
+    border: 2px solid #a01515;
     margin: 0 auto;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
     font-size: 18px;
     margin-top: 2px;
-  }
-
+    border-radius: 5px;
+}
+.if_error{
+    background: #f04646af;
+    border: 2px solid #a01515;
+}
 body {
     background-image: url('./images/bckg.jpg');
     background-size: cover;
