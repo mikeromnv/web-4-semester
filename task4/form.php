@@ -6,7 +6,7 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-            <label>ФИО <span class="error"><?php echo isset($errors['fio']) ? <br />$messages['fio'] : ''; ?></span> <br/>
+            <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
               value="<?= $_COOKIE['fio_value'] ?? '' ?>" 
@@ -14,7 +14,7 @@
             </label><br/>
             
 
-            <label>Телефон <span class="error"><?php echo isset($errors['phone']) ? <br />$messages['phone'] : ''; ?></span><br>
+            <label>Телефон <br /><span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
                 <input name="phone" 
                 type="tel" 
                 value="<?= $_COOKIE['phone_value'] ?? '' ?>" 
