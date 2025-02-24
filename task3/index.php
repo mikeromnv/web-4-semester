@@ -2,7 +2,22 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function emailExists($email, $pdo) {
 
+  $sql = "SELECT COUNT(*) FROM users WHERE email = :email"; 
+  $stmt = $pdo->prepare($sql);
+  if ($stmt === false) {
+    error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
+    return true; 
+  }
+  $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+  if (!$stmt->execute()) {
+    error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+    return true; 
+  }
+  $count = $stmt->fetchColumn(); 
+  return $count > 0;
+}
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -50,7 +65,16 @@ if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL
    print('Ошибка: Введите корректный email.<br/>');
    $errors = TRUE;
 }
+$user = 'u68604'; // Заменить на ваш логин uXXXXX
+$pass = '5411397'; // Заменить на пароль
+$db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
+$email=trim($_POST['email']);
+if (emailExists($email, $db)) { 
+  print("Этот email уже зарегистрирован.<br/>");
+  $errors = TRUE;
+}
 // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
 $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
 $fav_languages = $_POST["favorite_languages"] ?? []; // Массив, если multiple select

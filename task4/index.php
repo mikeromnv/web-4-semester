@@ -307,5 +307,5 @@ else {
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
   // Делаем перенаправление.
-  header('Location: success.html');
+  header('Location: index.php');
 }
