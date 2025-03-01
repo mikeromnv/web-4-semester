@@ -118,7 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    if ($errors['biography']) {
        setcookie('biography_error', '', time() - 3600);
        setcookie('biography_value', '', time() - 3600);
-       $messages['biography'] = 'Заполните биографию.';
+       
+       if ($_COOKIE['biography_error']==2){
+        $messages['biography'] = 'Заполните биографию.';
+       }
+       else{
+        $messages['biography'] = 'Недопустимые символы в биографии.';
+       }
    }
 
    if ($errors['contract']) {
@@ -236,7 +242,10 @@ else {
   if (empty($_POST['biography'])) {
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
-  }
+  }elseif (preg_match('/[<>{}\[\]]|<script|<\?php/i', $_POST['biography'])) {
+    setcookie('biography_error', '2', time() + 24 * 60 * 60);
+    $errors_validate = TRUE;
+}
   setcookie('biography_value', $_POST['biography'], time() + 30 * 24 * 60 * 60);
   // С КОНТРАКТОМ ОЗНАКОМЛЕН
   if (!isset($_POST["contract"])) {
