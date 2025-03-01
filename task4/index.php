@@ -138,14 +138,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   // Складываем предыдущие значения полей в массив, если есть.
   $values = array();
-  $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
-  $values['phone'] = empty($_COOKIE['phone_value']) ? '' : $_COOKIE['phone_value'];
-  $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
-  $values['date'] = empty($_COOKIE['date_value']) ? '' : $_COOKIE['date_value'];
-  $values['gender'] = empty($_COOKIE['gender_value']) ? '' : $_COOKIE['gender_value'];
-  $values['favorite_languages'] = empty($_COOKIE['favorite_languages_value']) ? '' : $_COOKIE['favorite_languages_value'];
-  $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
-  $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
+  $values['fio'] = empty($_COOKIE['fio_value']) ? '' : trim($_COOKIE['fio_value']);
+  $values['phone'] = empty($_COOKIE['phone_value']) ? '' : trim($_COOKIE['phone_value']);
+  $values['email'] = empty($_COOKIE['email_value']) ? '' : trim($_COOKIE['email_value']);
+  $values['date'] = empty($_COOKIE['date_value']) ? '' : trim($_COOKIE['date_value']);
+  $values['gender'] = empty($_COOKIE['gender_value']) ? '' : trim($_COOKIE['gender_value']);
+  $values['favorite_languages'] = empty($_COOKIE['favorite_languages_value']) ? '' : trim($_COOKIE['favorite_languages_value']);
+  $values['biography'] = empty($_COOKIE['biography_value']) ? '' : trim($_COOKIE['biography_value']);
+  $values['contract'] = empty($_COOKIE['contract_value']) ? '' : trim($_COOKIE['contract_value']);
+
 
   
 
@@ -183,13 +184,13 @@ else {
       } 
   }
   // Сохраняем ранее введенное в форму значение на месяц.
-  setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
+  setcookie('fio_value', $_POST['fio'], time() + 365 * 24 * 60 * 60);
   // ТЕЛЕФОН
   if (empty($_POST['phone']) || !preg_match('/^\+7\d{10}$/', $_POST['phone']) ) {
     setcookie('phone_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
-  setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
+  setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
   if (emailExists($email, $db)) { 
@@ -200,7 +201,7 @@ else {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
-  setcookie('email_value', $_POST['email'], time() + 30 * 24 * 60 * 60);
+  setcookie('email_value', $_POST['email'], time() + 365 * 24 * 60 * 60);
 
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
   $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
@@ -218,14 +219,14 @@ else {
           }
       }
   }
-  setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 30 * 24 * 60 * 60);
+  setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 365 * 24 * 60 * 60);
 
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
     setcookie('date_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
-  setcookie('date_value', $_POST['date'], time() + 30 * 24 * 60 * 60);
+  setcookie('date_value', $_POST['date'], time() + 365 * 24 * 60 * 60);
   // ПОЛ
   if (empty($_POST['gender'])){
     setcookie('gender_error', '1', time() + 24 * 60 * 60);
@@ -238,7 +239,7 @@ else {
       $errors_validate = TRUE;
     }
   }
-  setcookie('gender_value', $_POST['gender'], time() + 30 * 24 * 60 * 60);
+  setcookie('gender_value', $_POST['gender'], time() + 365 * 24 * 60 * 60);
   // БИО
   if (empty($_POST['biography'])) {
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
@@ -247,13 +248,13 @@ else {
     setcookie('biography_error', '2', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
 }
-  setcookie('biography_value', $_POST['biography'], time() + 30 * 24 * 60 * 60);
+  setcookie('biography_value', $_POST['biography'], time() + 365 * 24 * 60 * 60);
   // С КОНТРАКТОМ ОЗНАКОМЛЕН
   if (!isset($_POST["contract"])) {
     setcookie('contract_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
-  setcookie('contract_value', $_POST['contract'], time() + 30 * 24 * 60 * 60);
+  setcookie('contract_value', $_POST['contract'], time() + 365 * 24 * 60 * 60);
 // *************
 // TODO: тут необходимо проверить правильность заполнения всех остальных полей.
 // Сохранить в Cookie признаки ошибок и значения полей.
