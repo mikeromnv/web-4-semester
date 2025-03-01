@@ -72,11 +72,12 @@
                 
             </label><br />
 
-            <label><p><b>Ваша биография <br /><span class="error"><?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?></span></b></p>
+            <label><p><b>Ваша биография <br /><span class="error">
+              <?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?></span></b></p>
                 <p> <textarea 
                 name="biography" 
                 class="<?= (!empty($errors['biography'])) ? 'if_error' : 'no_errors' ?>">
-                <?= trim($_COOKIE['biography_value'] ?? '') ?></textarea>
+                <?php print $values['biography'];?></textarea>
                 </p>
             </label>
             
