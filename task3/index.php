@@ -100,9 +100,6 @@ if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date']
 if (empty($_POST['gender'])){
   print ('Зполните поле ПОЛ.<br/>');
   $errors = TRUE;
-}elseif (preg_match('/[<>{}\[\]]|<script|<\?php/i', $_POST['biography'])) {
-  print('Недопустимые символы в биографии.<br/>');
-  $errors = TRUE;
 }
 else{
   $allowed_genders = ["Male", "Female"];
@@ -114,6 +111,9 @@ else{
 // БИО
 if (empty($_POST['biography'])) {
   print('Заполните биографию.<br/>');
+  $errors = TRUE;
+}elseif (preg_match('/[<>{}\[\]]|<script|<\?php/i', $_POST['biography'])) {
+  print('Недопустимые символы в биографии.<br/>');
   $errors = TRUE;
 }
 // С КОНТРАКТОМ ОЗНАКОМЛЕН

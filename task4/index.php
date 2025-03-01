@@ -120,10 +120,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
        setcookie('biography_value', '', time() - 3600);
        
        if ($_COOKIE['biography_error']==2){
-        $messages['biography'] = 'Заполните биографию.';
+        $messages['biography'] = 'Недопустимые символы в биографии.';
        }
        else{
-        $messages['biography'] = 'Недопустимые символы в биографии.';
+       
+        $messages['biography'] = 'Заполните биографию.';
        }
    }
 
