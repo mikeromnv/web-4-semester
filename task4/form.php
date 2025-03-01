@@ -74,7 +74,7 @@
 
             <label><p><b>Ваша биография <br /><span class="error">
               <?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?></span></b></p>
-                <p> <textarea <?php print $values['biography'];?> name="biography" class="<?= (!empty($errors['biography'])) ? 'if_error' : 'no_errors' ?>"></textarea>
+                <p> <textarea name="biography" class="<?= (!empty($errors['biography'])) ? 'if_error' : 'no_errors' ?>"><?php print $values['biography'];?></textarea>
                 </p>
             </label>
             
