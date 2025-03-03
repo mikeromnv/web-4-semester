@@ -80,7 +80,7 @@ else {
     session_start();
   }
   // Если все ок, то авторизуем пользователя.
-  if (isLogin($login, &db) || isRightPassword($login, $password, $db)){
+  if (isLogin($login, $db) || isRightPassword($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.
     $_SESSION['uid'];
