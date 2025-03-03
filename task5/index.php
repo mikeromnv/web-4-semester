@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($errors['email']) {
       setcookie('email_error', '', time() - 3600);
       setcookie('email_value', '', time() - 3600);
-      if ($_COOKIE['email_error']==2){
+      if ($_COOKIE['email_error'] == 2){
       $messages['email'] = 'Такой email уже зарегистрирован.';
       }
       else{
@@ -207,7 +207,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // предварительно санитизовав.
     // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+
+    //printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+    $messages_log[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 
   // Включаем содержимое файла form.php.
@@ -251,7 +253,8 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (emailExists($email, $db)) { 
+  if (emailExists($email, $db) && !(!empty($_COOKIE[session_name()]) &&
+  session_start() && !empty($_SESSION['login'])) ) { 
     setcookie('email_error', '2', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }

@@ -4,7 +4,7 @@
   </head>
   <body>
 
-  <div class="error_messages" <?php if (empty($messages_log)) {print 'display="none"';} else {print 'display="block"';} ?>>
+  <div  <?php if (empty($messages_log)) {print 'display="none"';} else {class="error_messages"} ?>>
 
       <?php
       if (!empty($messages_log)) {
