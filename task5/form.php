@@ -4,6 +4,20 @@
   </head>
   <body>
 
+  <div class="error_messages" <?php if (empty($messages_log)) {print 'display="none"';} else {print 'display="block"';} ?>>
+
+      <?php
+      if (!empty($messages_log)) {
+        print('<div id="is_login">');
+        foreach ($messages_log as $message) {
+          print($message);
+        }
+        print('</div>');
+      }
+      ?>
+
+    </div>
+
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
