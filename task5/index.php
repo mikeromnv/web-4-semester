@@ -410,7 +410,7 @@ else {
     }
     try{
       $stmt_insert = $db->prepare("INSERT INTO login_users (user_id, login, password_hash, role ) VALUES (?, ?, ?, ?)");
-      $stmt_insert->execute([user_id, $login, $pass_hash, "user" ]);
+      $stmt_insert->execute([$user_id, $login, $pass_hash, "user" ]);
     } 
     catch (PDOException $e){
       print('Error : ' . $e->getMessage());
