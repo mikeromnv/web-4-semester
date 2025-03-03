@@ -70,7 +70,7 @@ else {
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
   $login = $_POST['login'];
-  $password = $_POST['password'];
+  $password = empty($_POST['password']) ? '' $_POST['password'];
   $user = 'u68604'; // Заменить на ваш логин uXXXXX
   $pass = '5411397'; // Заменить на пароль
   $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
