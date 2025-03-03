@@ -30,6 +30,7 @@ function isLogin($login, $db) {
 }
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
   $messages_log = array();
@@ -253,7 +254,7 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (emailExists($email, $db) && empty($_SESSION['login']) ) { 
+  if (emailExists($email, $db) && !isset($_COOKIE[session_name()]) ) { 
     setcookie('email_error', '2', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }

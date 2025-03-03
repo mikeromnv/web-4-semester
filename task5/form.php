@@ -4,9 +4,17 @@
   </head>
   <body>
 
+  <?php 
+    if(isset($_COOKIE[session_name()])){
+      print('<form class="logout_button" action="login.php" method="POST">
+      <input type="submit" name="logout" value="Выйти"/> 
+    </form>');
+    }
+
+    
+    ?>
+
   <div <?php if (empty($messages_log)) { echo 'style="display: none;"'; } else { echo 'class="error_messages"'; } ?>>
-
-
       <?php
       if (!empty($messages_log)) {
         print('<div id="is_login">');

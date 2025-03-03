@@ -47,6 +47,13 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
     // TODO: Сделать выход (окончание сессии вызовом session_destroy()
     //при нажатии на кнопку Выход).
     // Делаем перенаправление на форму.
+    if(isset($_POST['logout'])){
+      session_unset();
+      session_destroy();
+      header('Location: login.php');
+      exit();
+    }
+
     header('Location: ./');
     exit();
   }
@@ -77,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     </div>
     
 </body>
-</html>
+</html> 
 
 
 
