@@ -12,6 +12,12 @@
     border-radius: 5px;
 }
 
+.logout_button{
+    position: absolute;
+    top: 15;
+    right: 15;
+}
+
 .error_messages{
     display: flex;
     margin: 0 auto;
@@ -81,8 +87,3 @@ form h2, form, form input, form option, select, button, textarea {
     font-weight: bold;
 }
 
-.logout_button{
-    position: absolute;
-    top: 15;
-    right: 15;
-}
