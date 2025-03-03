@@ -4,7 +4,8 @@
   </head>
   <body>
 
-  <div  <?php if (empty($messages_log)) {print 'display="none"';} else {print 'class="error_messages"'} ?>>
+  <div <?php if (empty($messages_log)) { echo 'style="display: none;"'; } else { echo 'class="error_messages"'; } ?>>
+
 
       <?php
       if (!empty($messages_log)) {
