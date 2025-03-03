@@ -82,5 +82,7 @@ form h2, form, form input, form option, select, button, textarea {
 }
 
 .logout_button{
-    
+    position: absolute;
+    top: 15;
+    right: 15;
 }

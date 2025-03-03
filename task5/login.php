@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
-  $login = $_POST['login'];
+  $login = empty($_POST['login']) ? '' : $_POST['login'];
   $password = empty($_POST['password']) ? '' : $_POST['password'];
 
   $user = 'u68604'; // Заменить на ваш логин uXXXXX

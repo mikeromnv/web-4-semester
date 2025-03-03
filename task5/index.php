@@ -337,47 +337,48 @@ else {
     if (!empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {
 
-    try {
-        // Обновляем данные
-        $stmt = $db->prepare("UPDATE users 
-            SET full_name=?, phone=?, email=?, birth_date=?, gender=?, bio=?, contract_accepted=?
-            WHERE id = (SELECT user_id FROM login_users WHERE login=?)");
-        
-        $stmt->execute([
-            $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'],
-            $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $_SESSION['login']
-        ]);
+          try {
+              // Обновляем данные
+              $stmt = $db->prepare("UPDATE users 
+                  SET full_name=?, phone=?, email=?, birth_date=?, gender=?, bio=?, contract_accepted=?
+                  WHERE id = (SELECT user_id FROM login_users WHERE login=?)");
+              
+              $stmt->execute([
+                  $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'],
+                  $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $_SESSION['login']
+              ]);
 
-        // Удаляем старые языки
-        $stmt_delete = $db->prepare("DELETE FROM user_languages 
-            WHERE user_id = (SELECT user_id FROM login_users WHERE login=?)");
-        $stmt_delete->execute([$_SESSION['login']]);
+              // Удаляем старые языки
+              $stmt_delete = $db->prepare("DELETE FROM user_languages 
+                  WHERE user_id = (SELECT user_id FROM login_users WHERE login=?)");
+              $stmt_delete->execute([$_SESSION['login']]);
 
-        // новые языки
-        if (!empty($_POST['favorite_languages']) && is_array($_POST['favorite_languages'])) {
-            $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) 
-                VALUES ((SELECT user_id FROM login_users WHERE login=?), ?)");
-            
-            $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
-           
-            
-            foreach ($fav_languages as $language) {
-                // Получаем ID языка программирования
-                $stmt->execute([$language]);
-                $language_id = $stmt->fetchColumn();
+              // новые языки
+              if (!empty($_POST['favorite_languages']) && is_array($_POST['favorite_languages'])) {
+                  $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) 
+                      VALUES ((SELECT user_id FROM login_users WHERE login=?), ?)");
+                  
+                  $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
                 
-                if ($language_id) {
-                    // Связываем пользователя с языком
-                    $insert_stmt->execute([$_SESSION['login'], $language_id]);
-                }
+                  
+                  foreach ($fav_languages as $language) {
+                      // Получаем ID языка программирования
+                      $stmt->execute([$language]);
+                      $language_id = $stmt->fetchColumn();
+                      
+                      if ($language_id) {
+                          // Связываем пользователя с языком
+                          $insert_stmt->execute([$_SESSION['login'], $language_id]);
+                      }
 
-        }
-      }
+              }
+            }
 
-    } catch (PDOException $e) {
-        print('Ошибка БД: ' . $e->getMessage());
-        exit();
-    }
+          } catch (PDOException $e) {
+              print('Ошибка БД: ' . $e->getMessage());
+              exit();
+          }
+
     }
 
   else {
@@ -430,10 +431,10 @@ else {
       print('Error : ' . $e->getMessage());
       exit();
     }
-    // Сохраняем куку с признаком успешного сохранения.
-    setcookie('save', '1');
+  }
+  // Сохраняем куку с признаком успешного сохранения.
+  setcookie('save', '1');
 
-    // Делаем перенаправление.
-    header('Location: ./');
-}
+  // Делаем перенаправление.
+  header('Location: ./');
 }
