@@ -253,8 +253,7 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (emailExists($email, $db) && !(!empty($_COOKIE[session_name()]) &&
-  session_start() && !empty($_SESSION['login'])) ) { 
+  if (emailExists($email, $db) && empty($_SESSION['login']) ) { 
     setcookie('email_error', '2', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
@@ -355,12 +354,22 @@ else {
 
         // новые языки
         if (!empty($_POST['favorite_languages']) && is_array($_POST['favorite_languages'])) {
-            $stmt_insert = $db->prepare("INSERT INTO user_languages (user_id, language_id) 
+            $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) 
                 VALUES ((SELECT user_id FROM login_users WHERE login=?), ?)");
             
-            foreach ($_POST['favorite_languages'] as $language_id) {
-                $stmt_insert->execute([$_SESSION['login'], $language_id]);
-            }
+            $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
+           
+            
+            foreach ($fav_languages as $language) {
+                // Получаем ID языка программирования
+                $stmt->execute([$language]);
+                $language_id = $stmt->fetchColumn();
+                
+                if ($language_id) {
+                    // Связываем пользователя с языком
+                    $insert_stmt->execute([$_SESSION['login'], $language_id]);
+                }
+
         }
 
     } catch (PDOException $e) {

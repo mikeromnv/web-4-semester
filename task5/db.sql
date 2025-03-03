@@ -25,3 +25,11 @@ INSERT INTO programming_languages (name) VALUES
 ('Pascal'), ('C'), ('C++'), ('JavaScript'), ('PHP'), ('Python'),
 ('Java'), ('Haskell'), ('Clojure'), ('Prolog'), ('Scala'), ('Go');
 
+CREATE TABLE login_users (
+    user_id INT NOT NULL,
+    login VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
