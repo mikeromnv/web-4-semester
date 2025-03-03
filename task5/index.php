@@ -371,6 +371,7 @@ else {
                 }
 
         }
+      }
 
     } catch (PDOException $e) {
         print('Ошибка БД: ' . $e->getMessage());
