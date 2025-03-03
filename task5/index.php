@@ -381,8 +381,8 @@ else {
     setcookie('pass', $pass);
 
     try {
-      $stmt = $db->prepare("INSERT INTO users (fio, phone, email, date, gender, favorite_languages, biography, contract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['favorite_languages'], $_POST['biography'], $_POST['contract']]);
+      $stmt = $db->prepare("INSERT INTO users (full_name, phone, email, gender, birth_date, bio, contract_accepted) VALUES (?, ?, ?, ?, ?, ?, ?)");
+      $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
     } catch (PDOException $e) {
       print('Ошибка БД: ' . $e->getMessage());
       exit();
