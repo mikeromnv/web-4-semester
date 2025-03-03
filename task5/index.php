@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages_log[] = 'Спасибо, результаты сохранены.';
     // Если в куках есть пароль, то выводим сообщение.
     if (!empty($_COOKIE['pass'])) {
-        $messages_log[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
-        и паролем <strong>%s</strong> для изменения данных.',
+        $messages_log[] = sprintf('Вы можете <a href="login.php"> войти </a> с логином: <strong>%s</strong>
+        и паролем: <strong>%s</strong> для изменения данных.',
         strip_tags($_COOKIE['login']),
         strip_tags($_COOKIE['pass']));
     }

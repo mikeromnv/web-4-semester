@@ -57,11 +57,29 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 ?>
 
-<form action="" method="post">
-  <input name="login" />
-  <input name="pass" />
-  <input type="submit" value="Войти" />
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginstyle.css">
+  <title>Вход</title>
+</head>
+<body>
+    <div id="form-menu" class="form-menu">
+        <form action="" method="post">
+            <p>Логин</p>
+            <input name="login" />
+            <p>Пароль</p>
+            <input name="pass" />
+            <input id="button" type="submit" value="Войти" />
+        </form>
+    </div>
+    
+</body>
+</html>
+
+
 
 <?php
 }
@@ -86,7 +104,7 @@ else {
     // Записываем ID пользователя.
     $_SESSION['uid'];
     try {
-        $stmt_login = $db->prepare("SELECT id FROM login_users WHERE login=?");
+        $stmt_login = $db->prepare("SELECT user_id FROM login_users WHERE login=?");
         $stmt_login->execute([$_SESSION['login']]);
         $_SESSION['uid']  = $stmt_login->fetchColumn();
     } catch (PDOException $e){

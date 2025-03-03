@@ -11,6 +11,22 @@
     margin-top: 2px;
     border-radius: 5px;
 }
+
+.error_messages{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;    
+    width: auto;
+    max-width: fit-content;
+    background: green;
+    padding: 5px;
+    border: 2px solid black;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 .if_error{
     background: #f04646af;
     border: 2px solid #a01515;
@@ -22,8 +38,7 @@
 body {
     background-image: url('./images/bckg.jpg');
     background-size: cover;
-    margin: 0 auto;
-    
+    margin: 0 auto; 
 }
 
 .form-menu {
@@ -38,7 +53,6 @@ body {
     background: #f7e9e0b6;
     box-shadow: 0 0 20px #adb3a9;
     z-index: 9999;
-    
 }
 .notice{
     font-size: 11px;
