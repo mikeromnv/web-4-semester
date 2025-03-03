@@ -16,7 +16,7 @@ function isLogin($login, $db) {
   try {
       $stmt = $db->prepare("SELECT COUNT(*) FROM login_users WHERE login = ? GROUP BY login");
       $stmt->execute([$login]);
-      return (int) $stmt->fetchColumn(); // Приводим к int
+      return (int) $stmt->fetchColumn();
   } catch (PDOException $e) {
       print('Error : ' . $e->getMessage());
       exit();

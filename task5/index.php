@@ -1,15 +1,8 @@
 <?php
-/**
- * Реализовать возможность входа с паролем и логином с использованием
- * сессии для изменения отправленных данных в предыдущей задаче,
- * пароль и логин генерируются автоматически при первоначальной отправке формы.
- */
-
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
 function emailExists($email, $pdo) {
-
   $sql = "SELECT COUNT(*) FROM users WHERE email = :email"; 
   $stmt = $pdo->prepare($sql);
   if ($stmt === false) {
@@ -21,17 +14,25 @@ function emailExists($email, $pdo) {
     error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
     return true; 
   }
-  // 4. Получение результата запроса.
-  $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+  $count = $stmt->fetchColumn(); 
   $stmt->closeCursor();
-  // 6. Возврат true, если email найден в базе, иначе false.
   return $count > 0;
+}
+function isLogin($login, $db) {
+  try {
+      $stmt = $db->prepare("SELECT COUNT(*) FROM login_users WHERE login = ? GROUP BY login");
+      $stmt->execute([$login]);
+      return (int) $stmt->fetchColumn();
+  } catch (PDOException $e) {
+      print('Error : ' . $e->getMessage());
+      exit();
+  }
 }
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
-  $messages = array();
+  $messages_log = array();
 
   // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
   // Выдаем сообщение об успешном сохранении.
@@ -41,10 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('login', '', 100000);
     setcookie('pass', '', 100000);
     // Выводим сообщение пользователю.
-    $messages[] = 'Спасибо, результаты сохранены.';
+    $messages_log[] = 'Спасибо, результаты сохранены.';
     // Если в куках есть пароль, то выводим сообщение.
     if (!empty($_COOKIE['pass'])) {
-        $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
+        $messages_log[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
         и паролем <strong>%s</strong> для изменения данных.',
         strip_tags($_COOKIE['login']),
         strip_tags($_COOKIE['pass']));
@@ -168,26 +169,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $pass = '5411397'; // Заменить на пароль
         $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
           [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-        try{
-          $stmt_select = $db->prepare("SELECT * FROM login_users WHERE login = ?"); // ЗАПРОС
-          $stmt_select->execute([$_SESSION['login']]);
-          $log_user = $stmt_select->fetch(PDO::FETCH_OBJ);
-
-          if ($log_user) {
-            $fields = ['fio', 'phone', 'email', 'date', 'gender', 'biography', 'contract'];
-            foreach ($fields as $field) {
-                $values[$field] = strip_tags($log_user[$field]);
-            }
-          }
-        }
-        catch (PDOException $e) {
-          print('Ошибка БД: ' . $e->getMessage());
-          exit();
-        }
+          try {
+            $stmt_select = $db->prepare("SELECT * FROM users WHERE id = ?");
+            $stmt_select->execute([$_SESSION['uid']]); // Берем ID пользователя из сессии
+            $log_user = $stmt_select->fetch(PDO::FETCH_OBJ);
         
-        $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
-
-
+            if ($log_user) {
+                $values = [
+                    'fio' => strip_tags($log_user->full_name),
+                    'phone' => strip_tags($log_user->phone),
+                    'email' => strip_tags($log_user->email),
+                    'date' => strip_tags($log_user->birth_date),
+                    'gender' => strip_tags($log_user->gender),
+                    'biography' => strip_tags($log_user->bio),
+                    'contract' => $log_user->contract_accepted
+                ];
+            }
+            // Запрос на получение языков программирования
+            $stmt_lang = $db->prepare("
+                SELECT pl.name 
+                FROM programming_languages pl
+                JOIN user_languages ul ON pl.id = ul.language_id
+                WHERE ul.user_id = ?
+            ");
+            $stmt_lang->execute([$_SESSION['uid']]);
+            $favorite_languages = $stmt_lang->fetchAll(PDO::FETCH_COLUMN); // Получаем список языков в виде массива строк
+        
+            $values['favorite_languages'] = $favorite_languages;
+          } 
+          catch (PDOException $e) {
+              print('Ошибка БД: ' . $e->getMessage());
+              exit();
+          }
+        
     // TODO: загрузить данные пользователя из БД
     // и заполнить переменную $values,
     // предварительно санитизовав.
@@ -299,11 +313,6 @@ else {
     $errors_validate = TRUE;
   }
   setcookie('contract_value', $_POST['contract'], time() + 365 * 24 * 60 * 60);
-// *************
-// TODO: тут необходимо проверить правильность заполнения всех остальных полей.
-// Сохранить в Cookie признаки ошибок и значения полей.
-// *************
-
   if ($errors_validate) {
     // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
     header('Location: index.php');
@@ -319,67 +328,98 @@ else {
     setcookie('favorite_languages_error', '', 100000);
     setcookie('biography_error', '', 100000);
     setcookie('contract_error', '', 100000);
-    // TODO: тут необходимо удалить остальные Cookies.
   }
 
-  // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-  if (!empty($_COOKIE[session_name()]) &&
-      session_start() && !empty($_SESSION['login'])) {
-      $stmt = $db->prepare("UPDATE users SET fio=?, phone=?, email=?, date=?, gender=?, favorite_languages=?, biography=?, contract=? WHERE login=?");
-      $stmt->execute([
-          $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'],
-          $_POST['favorite_languages'], $_POST['biography'], $_POST['contract'], $_SESSION['login']
-      ]);
-    // TODO: перезаписать данные в БД новыми данными,
-    // кроме логина и пароля.
-  }
+    // Проверяем, авторизован ли пользователь
+    if (!empty($_COOKIE[session_name()]) &&
+    session_start() && !empty($_SESSION['login'])) {
+
+    try {
+        // Обновляем данные
+        $stmt = $db->prepare("UPDATE users 
+            SET full_name=?, phone=?, email=?, birth_date=?, gender=?, bio=?, contract_accepted=?
+            WHERE id = (SELECT user_id FROM login_users WHERE login=?)");
+        
+        $stmt->execute([
+            $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'],
+            $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $_SESSION['login']
+        ]);
+
+        // Удаляем старые языки
+        $stmt_delete = $db->prepare("DELETE FROM user_languages 
+            WHERE user_id = (SELECT user_id FROM login_users WHERE login=?)");
+        $stmt_delete->execute([$_SESSION['login']]);
+
+        // новые языки
+        if (!empty($_POST['favorite_languages']) && is_array($_POST['favorite_languages'])) {
+            $stmt_insert = $db->prepare("INSERT INTO user_languages (user_id, language_id) 
+                VALUES ((SELECT user_id FROM login_users WHERE login=?), ?)");
+            
+            foreach ($_POST['favorite_languages'] as $language_id) {
+                $stmt_insert->execute([$_SESSION['login'], $language_id]);
+            }
+        }
+
+    } catch (PDOException $e) {
+        print('Ошибка БД: ' . $e->getMessage());
+        exit();
+    }
+    }
+
   else {
-    // Генерируем уникальный логин и пароль.
-    // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
-        $login = uniqid();
-        $pass = substr(md5(uniqid()), 0, 8);
-        $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
-        $stmt = $db->prepare("INSERT INTO login_users (login, password) VALUES (?, ?)");
-        $stmt->execute([$login, $pass_hash]);
+    // Генерируем уникальный логин и пароль
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $login = substr(md5(time()), 0, 16);
+    while(isLogin($login, $db)){
+      $login = substr(md5(time()), 0, 16);
+    }
+    $pass = substr(md5(uniqid()), 0, 8);
+    $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 
     // Сохраняем в Cookies.
     setcookie('login', $login);
     setcookie('pass', $pass);
 
-    // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
-    // ...
-  }
-  try {
-    $stmt = $db->prepare("INSERT INTO users (fio, phone, email, date, gender, favorite_languages, biography, contract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['favorite_languages'], $_POST['biography'], $_POST['contract']]);
-  } catch (PDOException $e) {
-    print('Ошибка БД: ' . $e->getMessage());
-    exit();
-  }
-
-  $user_id = $db->lastInsertId(); // ID последнего вставленного пользователя
-  try{
-    $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
-    $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
-    
-    foreach ($fav_languages as $language) {
-        // Получаем ID языка программирования
-        $stmt->execute([$language]);
-        $language_id = $stmt->fetchColumn();
-        
-        if ($language_id) {
-            // Связываем пользователя с языком
-            $insert_stmt->execute([$user_id, $language_id]);
-        }
+    try {
+      $stmt = $db->prepare("INSERT INTO users (fio, phone, email, date, gender, favorite_languages, biography, contract) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['favorite_languages'], $_POST['biography'], $_POST['contract']]);
+    } catch (PDOException $e) {
+      print('Ошибка БД: ' . $e->getMessage());
+      exit();
     }
-  }
-  catch (PDOException $e) {
-    print('Ошибка БД: ' . $e->getMessage());
-    exit();
-  }
-  // Сохраняем куку с признаком успешного сохранения.
-  setcookie('save', '1');
 
-  // Делаем перенаправление.
-  header('Location: ./');
+    $user_id = $db->lastInsertId(); // ID последнего вставленного пользователя
+    try{
+      $stmt = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
+      $insert_stmt = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
+      
+      foreach ($fav_languages as $language) {
+          // Получаем ID языка программирования
+          $stmt->execute([$language]);
+          $language_id = $stmt->fetchColumn();
+          
+          if ($language_id) {
+              // Связываем пользователя с языком
+              $insert_stmt->execute([$user_id, $language_id]);
+          }
+      }
+    }
+    catch (PDOException $e) {
+      print('Ошибка БД: ' . $e->getMessage());
+      exit();
+    }
+    try{
+      $stmt_insert = $db->prepare("INSERT INTO login_users (user_id, login, password_hash, role ) VALUES (?, ?, ?, ?)");
+      $stmt_insert->execute([user_id, $login, $pass_hash, "user" ]);
+    } 
+    catch (PDOException $e){
+      print('Error : ' . $e->getMessage());
+      exit();
+    }
+    // Сохраняем куку с признаком успешного сохранения.
+    setcookie('save', '1');
+
+    // Делаем перенаправление.
+    header('Location: ./');
 }
+
