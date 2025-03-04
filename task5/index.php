@@ -230,7 +230,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
 
     //printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
-    $messages_log[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+    $msg = 'Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
+    $messages_log[] =$msg;
   }
 
   // Включаем содержимое файла form.php.
