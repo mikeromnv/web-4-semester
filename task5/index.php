@@ -270,9 +270,22 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (emailExists($email, $db) && !isset($_COOKIE[session_name()]) ) { 
-    setcookie('email_error', '2', time() + 24 * 60 * 60);
-    $errors_validate = TRUE;
+  if (emailExists($email, $db) && session_start())  { 
+    $current_id;
+    try{
+          $dp=$db->prepare("SELECT id from users where email=?");
+          $dp->execute([$email]);
+          $current_id = $dp->fetchColumn();
+    }
+    catch(PDOException $e){
+      print('Error : ' . $e->getMessage());
+      exit();
+    }
+
+    if($current_id!==$_SESSION['uid']) {
+      setcookie('email_error', '2', time() + 24 * 60 * 60);
+      $errors_validate = TRUE;
+    }     
   }
   elseif (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
