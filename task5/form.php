@@ -5,7 +5,7 @@
   <body>
 
   <?php 
-      if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
+      if(isset($_COOKIE[session_name()]) ){
         print('<form class="logout_button" action="login.php" method="POST">
         <input type="submit" name="logout" value="Выйти"/> 
         </form>');
