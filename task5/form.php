@@ -5,14 +5,12 @@
   <body>
 
   <?php 
-    if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
-      print('<form class="logout_button" action="login.php" method="POST">
-      <input type="submit" name="logout" value="Выйти"/> 
-    </form>');
-    }
-
-    
-    ?>
+      if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
+        print('<form class="logout_button" action="login.php" method="POST">
+        <input type="submit" name="logout" value="Выйти"/> 
+        </form>');
+      }
+  ?>
 
   <div <?php if (empty($messages_log)) { echo 'style="display: none;"'; } else { echo 'class="error_messages"'; } ?>>
       <?php
@@ -32,7 +30,7 @@
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
-              value="<?= $_COOKIE['fio_value'] ?? '' ?>" 
+              value="<?= $values['fio_value'] ?? '' ?>" 
               class="<?= (!empty($errors['fio'])) ? 'if_error' : 'no_errors' ?>">
             </label><br/>
             
@@ -40,7 +38,7 @@
             <label>Телефон <br /><span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
                 <input name="phone" 
                 type="tel" 
-                value="<?= $_COOKIE['phone_value'] ?? '' ?>" 
+                value="<?= $values['phone_value'] ?? '' ?>" 
                 class="<?= (!empty($errors['phone'])) ? 'if_error' : 'no_errors' ?>">
                 <p class="notice">*используйте телефонный код +7</p>
                 
@@ -49,14 +47,14 @@
             <label>Email <br /><span class="error"><?php echo isset($errors['email']) ? $messages['email'] : ''; ?></span><br/>
                 <input name="email" 
                 type="email" 
-                value="<?= $_COOKIE['email_value'] ?? '' ?>" 
+                value="<?= $values['email_value'] ?? '' ?>" 
                 class="<?= (!empty($errors['email'])) ? 'if_error' : 'no_errors' ?>">
                 
             </label><br />
             
             <label>Дата рождения <br /><span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?></span><br />
                     <input name="date"
-                            value="<?= $_COOKIE['date_value'] ?? date('Y-m-d') ?>" 
+                            value="<?= $values['date_value'] ?? date('Y-m-d') ?>" 
                             class="<?= (!empty($errors['date'])) ? 'if_error' : 'no_errors' ?>"
                             type="date"/>
                     
@@ -67,12 +65,12 @@
                 <label><input 
                 type="radio"
                 name="gender" 
-                value="Male" <?= (isset($_COOKIE['gender_value']) && $_COOKIE['gender_value'] === 'Male') ? 'checked' : ''; ?> />
+                value="Male" <?= (isset($values['gender_value']) && $values['gender_value'] === 'Male') ? 'checked' : ''; ?> />
                     Муж</label>
                 <label><input 
                 type="radio"
                 name="gender" 
-                value="Female" <?= (isset($_COOKIE['gender_value']) && $_COOKIE['gender_value'] === 'Female') ? 'checked' : ''; ?> />
+                value="Female" <?= (isset($values['gender_value']) && $values['gender_value'] === 'Female') ? 'checked' : ''; ?> />
                     Жен</label><br />
                 
             </label>
@@ -84,7 +82,7 @@
                 class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
-                    $selected_languages = isset($_COOKIE['favorite_languages_value']) ? explode(',', $_COOKIE['favorite_languages_value']) : [];
+                    $selected_languages = isset($values['favorite_languages_value']) ? explode(',', $values['favorite_languages_value']) : [];
                     
                     foreach ($all_languages as $lang) {
                         $selected = in_array($lang, $selected_languages) ? 'selected' : '';
@@ -103,7 +101,7 @@
             
           <label><input 
             type="checkbox"  
-            name="contract" <?= !empty($_COOKIE['contract_value']) ? 'checked' : ''; ?> 
+            name="contract" <?= !empty($values['contract_value']) ? 'checked' : ''; ?> 
             class="<?= (!empty($errors['contract'])) ? 'if_error' : 'no_errors' ?>">
             С контрактом ознакомлен(a)
             
