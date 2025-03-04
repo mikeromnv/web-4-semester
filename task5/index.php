@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     //printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     $msg = 'Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
-    $messages_log[] =$msg;
+    $messages_log[] = $msg;
   }
 
   // Включаем содержимое файла form.php.
