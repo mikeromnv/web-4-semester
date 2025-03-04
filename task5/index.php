@@ -50,7 +50,7 @@ function getAllLangs($db){
       exit();
     }
 }
-$all_languages=getLangs($db);
+$all_languages=getAllLangs($db);
 
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
