@@ -77,16 +77,16 @@
                 
             </label>
             
-            <label>Ваш любимый язык программирования <br /><span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
+            <label>Ваш любимый язык программирования <br />
+              <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
                 <select 
                 name="favorite_languages[]" 
                 class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
-                    $languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala"];
                     $selected_languages = isset($_COOKIE['favorite_languages_value']) ? explode(',', $_COOKIE['favorite_languages_value']) : [];
                     
-                    foreach ($languages as $lang) {
+                    foreach ($all_languages as $lang) {
                         $selected = in_array($lang, $selected_languages) ? 'selected' : '';
                         echo "<option value=\"$lang\" $selected>$lang</option>";
                     }

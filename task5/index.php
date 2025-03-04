@@ -2,6 +2,13 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+
+$user = 'u68604'; // Заменить на ваш логин uXXXXX
+$pass = '5411397'; // Заменить на пароль
+$db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+  
+
 function emailExists($email, $pdo) {
   $sql = "SELECT COUNT(*) FROM users WHERE email = :email"; 
   $stmt = $pdo->prepare($sql);
@@ -28,6 +35,23 @@ function isLogin($login, $db) {
       exit();
   }
 }
+
+function getAllLangs($db){
+    try{
+      $all_languages=[];
+      $data = $db->query("SELECT name FROM programming_languages")->fetchAll();
+      foreach ($data as $lang) {
+        $lang_name = $lang['name'];
+        $all_languages[$lang_name] = $lang_name;
+      }
+      return $all_languages;
+    } catch(PDOException $e){
+      print('Error: ' . $e->getMessage());
+      exit();
+    }
+}
+$all_languages=getLangs($db);
+
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 
@@ -166,11 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (empty($errors) && !empty($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
-        $user = 'u68604'; // Заменить на ваш логин uXXXXX
-        $pass = '5411397'; // Заменить на пароль
-        $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
-          [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-          try {
+        try {
             $stmt_select = $db->prepare("SELECT * FROM users WHERE id = ?");
             $stmt_select->execute([$_SESSION['uid']]); // Берем ID пользователя из сессии
             $log_user = $stmt_select->fetch(PDO::FETCH_OBJ);
@@ -220,10 +240,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-  $user = 'u68604'; // Заменить на ваш логин uXXXXX
-  $pass = '5411397'; // Заменить на пароль
-  $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
   // Проверяем ошибки.
   $errors_validate = FALSE;
   if (empty($_POST['fio'])) {
