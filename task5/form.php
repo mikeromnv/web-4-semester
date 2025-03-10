@@ -83,7 +83,7 @@
                 multiple="multiple">
                     <?php
                     $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
-                    echo "$values['favorite_languages']";
+                    echo $values['favorite_languages'];
                     foreach ($all_languages as $lang) {
                         $selected = in_array($lang, $selected_languages) ? 'selected="selected"' : '';
                         echo "<option value=\"$lang\" $selected>$lang</option>";
