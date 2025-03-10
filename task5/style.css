@@ -19,20 +19,19 @@
 }
 
 .error_messages{
-    display: flex;
-    margin: 0 auto;
-    justify-content: center;    
-    width: auto;
-    max-width: fit-content;
-    background: rgb(218, 142, 11);
-
-    box-shadow: 0 0 20px #adb3a9;
-    border-radius: 5px;
-    padding: 5px;
-
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    font-size: 20px;
+    display: flex    ;
+        margin: 0 auto;
+        margin-top: 7px;
+        justify-content: center;
+        width: auto;
+        max-width: fit-content;
+        background: rgb(255 161 0 / 63%);
+        box-shadow: 0 0 20px #adb3a9;
+        border-radius: 5px;
+        padding: 7px;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 20px;
 }
 
 .if_error{
