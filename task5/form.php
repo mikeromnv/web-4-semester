@@ -85,7 +85,7 @@
                     $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages_value']) : [];
                     
                     foreach ($all_languages as $lang) {
-                        $selected = in_array($lang, $selected_languages) ? 'selected' : '';
+                        $selected = in_array($lang, $selected_languages) ? 'selected="selected"' : '';
                         echo "<option value=\"$lang\" $selected>$lang</option>";
                     }
                     ?>
