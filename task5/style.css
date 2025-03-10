@@ -24,9 +24,11 @@
     justify-content: center;    
     width: auto;
     max-width: fit-content;
-    background: green;
+    background: rgb(218, 142, 11);
+
+    box-shadow: 0 0 20px #adb3a9;
+    border-radius: 5px;
     padding: 5px;
-    border: 2px solid black;
 
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
@@ -41,6 +43,11 @@
     background: #ffffff;
     border: 2px solid #000000;
 }
+
+.no_msgs{
+    visibility: hidden;
+}
+
 body {
     background-image: url('./images/bckg.jpg');
     background-size: cover;

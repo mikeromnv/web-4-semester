@@ -12,7 +12,7 @@
       }
   ?>
 
-  <div class="error_messages" <?php if (empty($messages_log)) {print 'visibility: hidden;';} else {print 'display="block"';} ?>>
+  <div <?php if (empty($messages_log)) {print 'class="no_msgs"';} else {print 'class="error_messages" ';} ?>>
       <?php
       if (!empty($messages_log)) {
         print('<div id="is_login">');
