@@ -5,14 +5,14 @@
   <body>
 
   <?php 
-      if(isset($_COOKIE[session_name()]) ){
+      if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) ){
         print('<form class="logout_button" action="login.php" method="POST">
         <input type="submit" name="logout" value="Выйти"/> 
         </form>');
       }
   ?>
 
-  <div class="error_messages" <?php if (empty($messages_log)) {print 'display="none"';} else {print 'display="block"';} ?>>
+  <div class="error_messages" <?php if (empty($messages_log)) {print 'visibility: hidden;';} else {print 'display="block"';} ?>>
       <?php
       if (!empty($messages_log)) {
         print('<div id="is_login">');
