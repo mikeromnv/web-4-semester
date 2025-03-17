@@ -295,7 +295,7 @@ else {
   setcookie('email_value', $_POST['email'], time() + 365 * 24 * 60 * 60);
 
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
-  $allowed_languages = ["Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskell", "Clojure", "Prolog", "Scala", "Go"];
+ 
   $fav_languages = $_POST["favorite_languages"] ?? []; // Получаем массив из формы
 
   if (!is_array($fav_languages) || empty($fav_languages)) {
@@ -304,7 +304,7 @@ else {
   } 
   else {
       foreach ($fav_languages as $lang) {
-          if (!in_array($lang, $allowed_languages)) {
+          if (!in_array($lang, $all_languages)) {
               setcookie('favorite_languages_error', '1', time() + 24 * 60 * 60);
               $errors_validate = TRUE;
           }
