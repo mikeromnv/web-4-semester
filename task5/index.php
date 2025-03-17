@@ -310,7 +310,7 @@ else {
           }
       }
   }
-  setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 365 * 24 * 60 * 60);
+  setcookie('favorite_languages_value',  $fav_languages, time() + 365 * 24 * 60 * 60);
 
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
