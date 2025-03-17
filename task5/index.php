@@ -216,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $stmt_lang->execute([$_SESSION['uid']]);
             $favorite_languages = $stmt_lang->fetchAll(PDO::FETCH_COLUMN); // Получаем список языков в виде массива строк
         
-            $values['favorite_languages'] = $favorite_languages;
+            $values['favorite_languages'] = implode(',', $favorite_languages);
           } 
           catch (PDOException $e) {
               print('Ошибка БД: ' . $e->getMessage());
@@ -310,7 +310,7 @@ else {
           }
       }
   }
-  setcookie('favorite_languages_value',  $fav_languages, time() + 365 * 24 * 60 * 60);
+  setcookie('favorite_languages_value', implode(',', $fav_languages), time() + 365 * 24 * 60 * 60);
 
   // ДАТА РОЖДЕНИЯ
   if (empty($_POST['date']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['date'])) {
