@@ -1,3 +1,4 @@
+<?php
 function getAllLangs($db){
     try{
       $all_languages=[];
@@ -91,3 +92,5 @@ function isRightPassword($login, $password, $db) {
       exit();
   }
 }
+
+?>
