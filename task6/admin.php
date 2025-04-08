@@ -1,26 +1,36 @@
 <?php
 
-/**
- * Задача 6. Реализовать вход администратора с использованием
- * HTTP-авторизации для просмотра и удаления результатов.
- **/
+require_once 'functions/Query.php';
+require_once 'functions/MyFunctions.php';
 
-// Пример HTTP-аутентификации.
-// PHP хранит логин и пароль в суперглобальном массиве $_SERVER.
-// Подробнее см. стр. 26 и 99 в учебном пособии Веб-программирование и веб-сервисы.
-if (empty($_SERVER['PHP_AUTH_USER']) ||
-    empty($_SERVER['PHP_AUTH_PW']) ||
-    $_SERVER['PHP_AUTH_USER'] != 'admin' ||
-    md5($_SERVER['PHP_AUTH_PW']) != md5('123')) {
-  header('HTTP/1.1 401 Unanthorized');
-  header('WWW-Authenticate: Basic realm="My site"');
-  print('<h1>401 Требуется авторизация</h1>');
-  exit();
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+  $user_log=$_SERVER['PHP_AUTH_USER'];
+  $user_pass=$_SERVER['PHP_AUTH_PW'];
+  
+  if (empty($_SERVER['PHP_AUTH_USER']) ||
+      empty($_SERVER['PHP_AUTH_PW']) ||
+      !admin_login_check($user_log) ||
+      !admin_password_check($user_log, $user_pass)) {
+
+    header('HTTP/1.1 401 Unanthorized');
+    header('WWW-Authenticate: Basic realm="My site"');
+    print('<h1>401 Требуется авторизация</h1>');
+    exit();
+  }
+
+  print('<div class="">Вы успешно авторизовались и видите защищенные паролем данные.<div>');
+
+  $language_table = language_stats();
+  $user_table = users_table();
+
+  include('pages/table_page.php');
 }
+else {
 
-print('Вы успешно авторизовались и видите защищенные паролем данные.');
+  if(!empty($_POST['del_by_uid']) && !empty($_SERVER['PHP_AUTH_USER'])){
+    del_by_uid($_POST['del_by_uid']);
+  } 
 
-// *********
-// Здесь нужно прочитать отправленные ранее пользователями данные и вывести в таблицу.
-// Реализовать просмотр и удаление всех данных.
-// *********
+  header('Location: admin.php');
+}
