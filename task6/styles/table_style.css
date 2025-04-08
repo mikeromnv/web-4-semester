@@ -1,0 +1,91 @@
+html{
+    background-color:rgb(244, 244, 252);
+    font-family: "Mac";
+}
+
+body{
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:auto;
+    padding-right: auto;
+}
+
+table{
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    background-color: rgb(140, 140, 162);
+    border-radius: 10px;
+    border-width: 4px;
+    border-color: rgb(165, 151, 198);
+    border-style: ridge;
+    border-spacing: 1px;
+}
+thead{
+    text-align: center;
+    font-weight: 600;
+    border-width: 4px;
+    border-spacing: 5px;
+}
+
+thead td{
+    background-color: rgb(170, 170, 206);
+    margin-left: 5px;
+    padding: 10px;
+    border-radius: 7px;
+    border-style:outset;
+    border-color:rgb(158, 158, 198);
+    color:rgb(47, 46, 66);
+}
+tbody{
+    background-color: blue;
+    margin:-1px;
+}
+tbody td{
+    background-color: rgb(216, 216, 244);
+    padding: 10px;
+    border-style:outset;
+    border-color:rgb(158, 158, 198);
+    color:rgb(47, 46, 66);
+    border-radius: 4px;
+}
+
+.buttons{
+    padding:2px;
+    text-align: center;
+}
+.delete_button{
+    border: 3px outset rgb(206, 86, 122);
+    background-color: #febbcb;
+    border-radius: 3px;
+    color: rgb(134, 52, 63);
+    margin: 1px;
+    font-family: "Mac";
+}
+.change_button{
+    border: 3px outset rgb(92, 171, 84);
+    border-radius: 3px;
+    background-color: #c2febb;
+    color: rgb(44, 105, 50);
+    margin: 1px;
+    font-family: "Mac";
+}
+
+.message{
+    border: 3px outset rgb(92, 171, 84);
+    border-radius: 3px;
+    background-color: #c2febb;
+    color: rgb(44, 105, 50);
+    margin: 1px;
+}
+
+@font-face {
+    font-family: "Mac";
+    src: url("Kanit-Cyrillic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
