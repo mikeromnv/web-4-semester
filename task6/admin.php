@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $language_table = language_stats();
   $user_table = users_table();
 
-  include('pages/table_page.php');
+  include('pages/table.php');
 }
 else {
 

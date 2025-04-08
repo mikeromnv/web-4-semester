@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
   */
 
-  include('pages/form.php');
+  include('pages/formPage.php');
 }
 else {
 
