@@ -22,7 +22,7 @@ input{
     margin-top: 5px;
 }
 body {
-    background-image: url('./images/bckg.jpg');
+    background-image: url('../images/bckg.jpg');
     background-size: cover;
     margin: 0 auto; 
     font-family: 'Courier New', Courier, monospace;
