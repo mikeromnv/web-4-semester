@@ -18,7 +18,7 @@ function AdminLogin($login) {
     global $db;
     $check = false;
     try{
-      $stmt = $db->prepare("SELECT login FROM users WHERE role='admin'");
+      $stmt = $db->prepare("SELECT login FROM login_users WHERE role='admin'");
       $stmt->execute();
   
       while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -38,7 +38,7 @@ function AdminPassword($login, $password) {
     global $db;
     $passw;
     try{
-      $stmt = $db->prepare("SELECT password FROM users WHERE login = ? AND role='admin' ");
+      $stmt = $db->prepare("SELECT password_hash FROM login_users WHERE login = ? AND role='admin' ");
       $stmt->execute([$login]);
       $passw = $stmt->fetchColumn();
       if($passw===false){
