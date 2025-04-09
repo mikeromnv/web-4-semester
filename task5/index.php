@@ -223,12 +223,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
               exit();
           }
         
-    // TODO: загрузить данные пользователя из БД
-    // и заполнить переменную $values,
-    // предварительно санитизовав.
-    // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
-    // См. https://www.php.net/manual/en/pdostatement.fetchall.php
-
     //printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     $msg = 'Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
     $messages_log[] = $msg;
