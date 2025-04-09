@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   
   if (empty($_SERVER['PHP_AUTH_USER']) ||
       empty($_SERVER['PHP_AUTH_PW']) ||
-      !admin_login_check($user_log) ||
-      !admin_password_check($user_log, $user_pass)) {
+      !AdminLogin($user_log) ||
+      !AdminPassword($user_log, $user_pass)) {
 
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="My site"');

@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   
   //insert values
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) &&
-  admin_login_check($_SERVER['PHP_AUTH_USER']) && admin_password_check($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+  AdminLogin($_SERVER['PHP_AUTH_USER']) && AdminPassword($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
     if(!empty($_GET['uid']))
     {
       $update_id = $_GET['uid'];
@@ -335,7 +335,7 @@ else {
     // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
 
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) &&
-  admin_login_check($_SERVER['PHP_AUTH_USER']) && admin_password_check($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+  AdminLogin($_SERVER['PHP_AUTH_USER']) && AdminPassword($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
   
     if(!empty($_POST['uid'])) {
       $user_id = $_POST['uid'];
