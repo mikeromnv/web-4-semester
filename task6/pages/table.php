@@ -1,6 +1,6 @@
 <?php
-if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !admin_login_check($user_log, $db) ||
-!admin_password_check($user_log, $user_pass, $db)){
+if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminLogin($user_log, $db) ||
+!AdminPassword($user_log, $user_pass, $db)){
     header('Location: admin.php');
 }
 ?>

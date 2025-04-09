@@ -14,7 +14,7 @@ function getAllLangs($db){
     }
 }
 
-function admin_login_check($login) {
+function AdminLogin($login) {
     global $db;
     $check = false;
     try{
@@ -34,7 +34,7 @@ function admin_login_check($login) {
     return $check;
 }
 
-function admin_password_check($login, $password) {
+function AdminPassword($login, $password) {
     global $db;
     $passw;
     try{
