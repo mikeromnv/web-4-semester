@@ -28,7 +28,9 @@
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
           <h1><?php
-                    echo (empty($all_langs));?></h1>
+                    if (empty($all_langs)){
+                      echo "ПУСТО";
+                    }?></h1>
 
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
@@ -86,8 +88,8 @@
                 multiple="multiple">
                     <?php
                     
-
-                    $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
+                    $selected_languages = explode(",",  $values['favorite_languages']);
+                    //$selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
                     
                     foreach ($all_langs as $lang => $value) {
                       printf('<option value="%s" ', $lang);

@@ -51,7 +51,8 @@ function getAllLangs($db){
     }
 }
 $all_langs=getAllLangs($db);
-            
+echo "LOL";
+
 
 
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP

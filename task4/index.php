@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages['fio'] = 'ФИО должно быть короче 150 символов';
        }
        if ($_COOKIE['fio_error']==3){
-        $messages['fio'] = 'ФИО может содержать только только буквы и пробелы';
+        $messages['fio'] = 'ФИО может содержать только буквы и пробелы';
        }
        else{
         $messages['fio'] = 'Заполните имя.';
