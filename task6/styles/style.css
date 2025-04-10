@@ -58,7 +58,7 @@
 }
 
 body {
-    background-image: url('./images/bckg.jpg');
+    background-image: url('../images/bckg.jpg');
     background-size: cover;
     margin: 0 auto; 
 }

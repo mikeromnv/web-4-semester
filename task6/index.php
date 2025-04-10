@@ -9,7 +9,7 @@ $pass = '5411397'; // Заменить на пароль
 $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-//$allowed_lang=getLangs();
+
 $all_languages=getAllLangs($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
