@@ -372,7 +372,7 @@ else {
       setcookie('login', $login);
       setcookie('password', $pass);
       try {
-        INSERT($login, $hash_password);
+        INSERT($login, $pass_hash);
       }
       catch(PDOException $e){
         print('Error : ' . $e->getMessage());
