@@ -1,9 +1,6 @@
 <?php
-global $db;
-$user = 'u68604'; // Заменить на ваш логин uXXXXX
-$pass = '5411397'; // Заменить на пароль
-$db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
-  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+
 
 function getAllLangs($db){
     try{
@@ -87,6 +84,10 @@ function isLogin($login) {
 }
 
 function isRightPassword($login, $password) {
+  $user = 'u68604'; // Заменить на ваш логин uXXXXX
+  $pass = '5411397'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
   try {
       $stmt = $db->prepare("SELECT password_hash FROM login_users WHERE login = ? GROUP BY login");
       $stmt->execute([$login]);
