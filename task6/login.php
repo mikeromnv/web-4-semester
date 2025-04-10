@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   $login_messages='';
   $login = $_POST['login'];
-  $password=$_POST['password'];
+  $password=$_POST['pass'];
 
   if (!$session_started) {
     session_start();
