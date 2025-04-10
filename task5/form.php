@@ -82,6 +82,12 @@
                 class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
+echo '<ul>';
+foreach ($all_languages as $key => $value) {
+    echo "<li>$key => $value</li>";
+}
+echo '</ul>';
+
                     $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
                     
                     foreach ($all_languages as $lang => $value) {

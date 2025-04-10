@@ -51,11 +51,7 @@ function getAllLangs($db){
     }
 }
 $all_languages=getAllLangs($db);
-            echo '<ul>';
-              foreach ($all_languages as $key => $value) {
-                  echo "<li>$key => $value</li>";
-              }
-            echo '</ul>';
+            
 
 
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
