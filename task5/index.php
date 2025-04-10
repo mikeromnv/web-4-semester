@@ -50,7 +50,7 @@ function getAllLangs($db){
       exit();
     }
 }
-$all_languages=getAllLangs($db);
+$all_langs=getAllLangs($db);
             
 
 
@@ -300,7 +300,7 @@ else {
   } 
   else {
       foreach ($fav_languages as $lang) {
-          if (!in_array($lang, $all_languages)) {
+          if (!in_array($lang, $all_langs)) {
               setcookie('favorite_languages_error', '1', time() + 24 * 60 * 60);
               $errors_validate = TRUE;
           }
