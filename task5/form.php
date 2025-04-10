@@ -74,13 +74,7 @@
                     Жен</label><br />
                 
             </label>
-            <?php
-            echo '<ul>';
-              foreach ($all_languages as $key => $value) {
-                  echo "<li>$key => $value</li>";
-              }
-            echo '</ul>';
-            ?>
+            
             <label>Ваш любимый язык программирования <br />
               <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
                 <select 
@@ -90,9 +84,8 @@
                     <?php
                     $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
                     //echo $values['favorite_languages'];
-                    foreach ($all_languages as $key => $lang) {
-                      $selected = in_array($lang, $selected_languages) ? 'selected="selected"' : '';
-                      echo "<option value=\"$key\" $selected>$lang</option>";
+                    foreach ($all_languages as $lang) {
+                      echo "<option value=\"$lang\" " . (in_array($lang, $selected_languages) ? 'selected' : '') . ">$lang</option>";
                     }
                   
                     ?>
