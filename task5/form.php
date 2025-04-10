@@ -27,6 +27,9 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
+          <h1><?php
+                    echo (empty($all_languages));?></h1>
+
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
               name="fio" 
@@ -82,11 +85,7 @@
                 class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
                 multiple="multiple">
                     <?php
-echo '<ul>';
-foreach ($all_languages as $key => $value) {
-    echo "<li>$key => $value</li>";
-}
-echo '</ul>';
+                    
 
                     $selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
                     
