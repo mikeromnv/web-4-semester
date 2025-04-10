@@ -8,104 +8,120 @@
   </head>
   <body>
 
-    <?php 
-    if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
-      
-        print('<form class="logout_form" action="./login.php" method="POST">
-        <input type="submit" name="logout" value="Выйти"/></form>');
+  <?php 
+      if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
+        print('<form class="logout_button" action="login.php" method="POST">
+        <input type="submit" name="logout" value="Выйти"/> 
+        </form>');
+      }
+  ?>
 
-    }
-    ?>
-
-    <div class="error_messages" <?php if (empty($messages)) {print 'display="none"';} else {print 'display="block"';} ?>>
-
+  <div <?php if (empty($messages_log)) {print 'class="no_msgs"';} else {print 'class="error_messages" ';} ?>>
       <?php
-      if (!empty($messages)) {
-        print('<div id="messages">');
-        foreach ($messages as $message) {
+      if (!empty($messages_log)) {
+        print('<div id="is_login">');
+        foreach ($messages_log as $message) {
           print($message);
         }
         print('</div>');
       }
       ?>
 
-    </div>
+  </div>
+
+  <div id="form-menu" class="form-menu">
+        <form id="UserForm" class="user-form" action="index.php" method="POST">
+          
+
+            <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
+              <input type="text" 
+              name="fio" 
+              value="<?= $values['fio'] ?? '' ?>" 
+              class="<?= (!empty($errors['fio'])) ? 'if_error' : 'no_errors' ?>">
+            </label><br/>
+            
+
+            <label>Телефон <br /><span class="error"><?php echo isset($errors['phone']) ? $messages['phone'] : ''; ?></span><br>
+                <input name="phone" 
+                type="tel" 
+                value="<?= $values['phone'] ?? '' ?>" 
+                class="<?= (!empty($errors['phone'])) ? 'if_error' : 'no_errors' ?>">
+                <p class="notice">*используйте телефонный код +7</p>
+                
+            </label> <br>
+            
+            <label>Email <br /><span class="error"><?php echo isset($errors['email']) ? $messages['email'] : ''; ?></span><br/>
+                <input name="email" 
+                type="email" 
+                value="<?= $values['email'] ?? '' ?>" 
+                class="<?= (!empty($errors['email'])) ? 'if_error' : 'no_errors' ?>">
+                
+            </label><br />
+            
+            <label>Дата рождения <br /><span class="error"><?php echo isset($errors['date']) ? $messages['date'] : ''; ?></span><br />
+                    <input name="date"
+                            value="<?= $values['date'] ?? date('Y-m-d') ?>" 
+                            class="<?= (!empty($errors['date'])) ? 'if_error' : 'no_errors' ?>"
+                            type="date"/>
+                    
+            </label><br />
 
 
-    <div class="formstyle" > 
-      <form id="myform" class="application" action="./index.php" method="POST">
+            <label>Пол <br/><span class="error"><?php echo isset($errors['gender']) ? $messages['gender'] : ''; ?></span><br />
+                <label><input 
+                type="radio"
+                name="gender" 
+                value="Male" <?= (isset($values['gender']) && $values['gender'] === 'Male') ? 'checked' : ''; ?> />
+                    Муж</label>
+                <label><input 
+                type="radio"
+                name="gender" 
+                value="Female" <?= (isset($values['gender']) && $values['gender'] === 'Female') ? 'checked' : ''; ?> />
+                    Жен</label><br />
+                
+            </label>
+            
+            <label>Ваш любимый язык программирования <br />
+              <span class="error"><?php echo isset($errors['favorite_languages']) ? $messages['favorite_languages'] : ''; ?></span><br />
+                <select 
+                name="favorite_languages[]" 
+                class="<?= (!empty($errors['favorite_languages'])) ? 'if_error' : 'no_errors' ?>"
+                multiple="multiple">
+                    <?php
+                    
+                    $selected_languages = explode(",",  $values['favorite_languages']);
+                    //$selected_languages = isset($values['favorite_languages']) ? explode(',', $values['favorite_languages']) : [];
+                    
+                    foreach ($all_langs as $lang => $value) {
+                      printf('<option value="%s" ', $lang);
+                      if(in_array($lang, $selected_languages)) {
+                        print 'selected="selected"';
+                      }
+                      printf('>%s</option>', $value);
+                    }
 
-        <h2> ФОРМА </h2> 
+                  
+                    ?>
+                </select>
+                
+            </label><br />
 
-        <input type="hidden" name="uid" value='<?php print $values['uid'];?>' />
-        
-      <label> 
-        ФИО: <br/>
-        <input name="fio" <?php if ($errors['fio'] ) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />
-      </label> <br/>
-
-      <label> 
-        Номер телефона: <br />
-        <input name="number" type="tel" 
-        <?php if ($errors['number']) {print 'class="error"';} ?> value="<?php print $values['number']; ?>"/>
-      </label> <br/>
-      <p class="numtext"> *используйте телефонный код +7</p>
-
-      <label>
-        E-mail: <br/>
-        <input name="email" type="email" 
-        <?php if ($errors['email']) {print 'class="error"';} ?> value="<?php print $values['email']; ?>"/>
-      </label> <br/>
-
-      <label> 
-        Дата рождения: <br/>
-        <input name="birthdate" type="date" 
-        <?php if ($errors['bdate']) {print 'class="error"';} ?> value="<?php print $values['bdate']; ?>"/>
-      </label> <br/>
-      
-       Пол: <br /> 
-      <label> <input type="radio" name="radio-group-1" value="male" 
-      <?php if ($errors['gen']) {print 'class="error"';} ?>
-      <?php if ($values['gen']=='male') {print 'checked="checked"';} ?>/> Мужской </label>
-      <label> <input type="radio"  name="radio-group-1" value="female" 
-      <?php if ($errors['gen']) {print 'class="error"';} ?>
-      <?php if ($values['gen']=='female') {print 'checked="checked"';} ?>/> Женский</label> <br/>
-
-      <?php 
-      $user_languages = explode(",",  $values['lang']);
-      ?>
-
-      <label > 
-        Любимый язык программирования: <br/>
-        <select  name="languages[]" multiple="multiple" 
-        <?php if ($errors['lang']) {print 'class="error"';} ?> >
-
-        <?php 
-          foreach ($allowed_lang as $lang => $value) {
-            printf('<option value="%s" ', $lang);
-            if(in_array($lang, $user_languages)) {
-              print 'selected="selected"';
-            }
-            printf('>%s</option>', $value);
-          }
-        ?>
-        
-        </select>
-      </label> <br/>
-
-      <label>
-        Биография: <br/>
-        <textarea name="biography" <?php if ($errors['bio']) {print 'class="error"';} ?>><?php print $values['bio']; ?></textarea>
-      </label> <br/>
-
-      <label class="form-checkbox pl-2">
-        <input type="checkbox" name="checkbox"
-        <?php if ($errors['checkbox']) {print 'class="error"';} ?>  <?php if (!$errors['checkbox']) {print 'checked="checked"';} ?>/> 
-        С контрактом ознакомлен 
-      </label> <br/>
-
-      <input type="submit" value="Сохранить"/> 
-      </form>
+            <label><p><b>Ваша биография <br /><span class="error">
+              <?php echo isset($errors['biography']) ? $messages['biography'] : ''; ?></span></b></p>
+                <p> <textarea name="biography" class="<?= (!empty($errors['biography'])) ? 'if_error' : 'no_errors' ?>"><?php print $values['biography'];?></textarea>
+                </p>
+            </label>
+            
+          <label><input 
+            type="checkbox"  
+            name="contract" <?= !empty($values['contract']) ? 'checked' : ''; ?> 
+            class="<?= (!empty($errors['contract'])) ? 'if_error' : 'no_errors' ?>">
+            С контрактом ознакомлен(a)
+            
+          </label> 
+            <br /><span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br /></span>
+            <input name="submit_button" type="submit" value="Сохранить">
+        </form>
     </div>
 
   </body>

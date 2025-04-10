@@ -27,10 +27,7 @@
 
 <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-          <h1><?php
-                    if (empty($all_langs)){
-                      echo "ПУСТО";
-                    }?></h1>
+          
 
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
