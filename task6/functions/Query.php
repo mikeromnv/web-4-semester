@@ -149,7 +149,7 @@ function INSERT($login, $hash_password){
     global $db;
     try{
         $stmt = $db->prepare("INSERT INTO users (full_name, phone, email, birth_date, gender, bio, contract_accepted ) values (?, ?, ?, ?, ?, ?, ? )");
-        $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['gender'], $_POST['date'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
+        $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
     } catch (PDOException $e){
         print('Error : ' . $e->getMessage());
         exit();
