@@ -363,14 +363,14 @@ else {
       $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
       $login = substr(md5(time()), 0, 16);
-      while(isValid($login)){
+      while(isLogin($login, $db)){
         $login = substr(md5(time()), 0, 16);
       }
-      $password = substr(str_shuffle($permitted_chars), 0, 12);
-      $hash_password = password_hash($password, PASSWORD_DEFAULT);
+      $pass = substr(md5(uniqid()), 0, 8);
+      $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
       
       setcookie('login', $login);
-      setcookie('password', $password);
+      setcookie('pass', $password);
       try {
         INSERT($login, $hash_password);
       }
