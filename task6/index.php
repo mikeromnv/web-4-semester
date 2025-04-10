@@ -370,7 +370,7 @@ else {
       $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
       
       setcookie('login', $login);
-      setcookie('password', $pass);
+      setcookie('pass', $pass);
       try {
         INSERT($login, $pass_hash);
       }
