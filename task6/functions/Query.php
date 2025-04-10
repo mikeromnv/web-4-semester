@@ -37,7 +37,7 @@ function users_table(){
         $uid;
         while($row = $stmt->fetch(PDO::FETCH_OBJ)){
             $log=$row->login;
-            $uid=$row->id;
+            $uid=$row->user_id;
             $r = "<tr><td>$uid</td><td>$log</td>";
 
             $form_data = $db->prepare("SELECT full_name, phone, email, gender AS gen, bio AS bio, birth_date, contract_accepted FROM users WHERE id = ?");
@@ -63,7 +63,7 @@ function users_table(){
             </form>";
 
             $r.="<br><div class=\"change_button\">
-            <a href=\"index.php?uid=$row->id\">Изменить</a>
+            <a href=\"index.php?uid=$row->user_id\">Изменить</a>
             </div></td></tr>";
 
             $rows[]=$r;
