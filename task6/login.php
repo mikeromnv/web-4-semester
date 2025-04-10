@@ -35,7 +35,7 @@ else {
     session_start();
   }
 
-  if (isValid($login) && password_check($login, $password)){
+  if (isLogin($login) && isRightPassword($login, $password)){
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['uid'] = getUID([$_SESSION['login']]);
 
