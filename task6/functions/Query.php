@@ -186,10 +186,10 @@ function INSERTData($login){
     $values = array();
     try{
         $mas=[];
-        $stmt = $db->prepare("SELECT full_name, phone, email, bio, gender AS gen, birth_date, contract_accepted FROM users WHERE id = ?");
+        $stmt = $db->prepare("SELECT full_name, phone, email, bio, gender, birth_date, contract_accepted FROM users WHERE id = ?");
         $stmt->execute([$uid]);
         $mas = $stmt->fetch(PDO::FETCH_ASSOC);
-        $fields = ['fio', 'number', 'email', 'bio', 'gen', 'bdate', 'checkbox'];
+        $fields = ['full_name', 'phone', 'email', 'bio', 'birth_date', 'gender', 'contract_accepted'];
         foreach($fields as $field) {
             $values[$field] = strip_tags($mas[$field]);
         }
