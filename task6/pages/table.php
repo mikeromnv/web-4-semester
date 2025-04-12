@@ -1,6 +1,6 @@
 <?php
-if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminLogin($user_log, $db) ||
-!AdminPassword($user_log, $user_pass, $db)){
+if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminLogin($user_log, $databaseConnection) ||
+!AdminPassword($user_log, $user_pass, $databaseConnection)){
     header('Location: admin.php');
 }
 ?>
@@ -16,7 +16,7 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
     <title> ADMIN </title>
   </head>
 
-    <form class="logout_button" action="admin.php" method="POST">
+    <form class="logout_button" action="" method="POST">
         <input type="submit" name="logout" value="Выйти"/> 
     </form>
 
