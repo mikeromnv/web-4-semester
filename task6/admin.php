@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="My site"');
-    print('<h1>401 Требуется авторизация</h1>');
+    print('<h1>401 Требуется авторизация. Доступ запрещен.</h1>');
     exit();
   }
 
@@ -27,6 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('pages/table.php');
 }
 else {
+
+  // Обработка выхода
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    header('Location: admin.php');
+    exit();
+  }
 
   if(!empty($_POST['del_by_uid']) && !empty($_SERVER['PHP_AUTH_USER'])){
     del_by_uid($_POST['del_by_uid']);
