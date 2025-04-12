@@ -3,6 +3,14 @@
 require_once 'functions/Query.php';
 require_once 'functions/MyFunctions.php';
 
+// Обработка выхода
+if (isset($_GET['logout'])) {
+  header('HTTP/1.1 401 Unauthorized');
+  header('WWW-Authenticate: Basic realm="My site"');
+  header('Location: admin.php');
+  exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   $user_log=$_SERVER['PHP_AUTH_USER'];
@@ -27,13 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('pages/table.php');
 }
 else {
-
-  // Обработка выхода
-  if (isset($_GET['logout'])) {
-    session_destroy();
-    header('Location: admin.php');
-    exit();
-  }
 
   if(!empty($_POST['del_by_uid']) && !empty($_SERVER['PHP_AUTH_USER'])){
     del_by_uid($_POST['del_by_uid']);
