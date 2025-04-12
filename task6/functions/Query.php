@@ -17,7 +17,7 @@ function language_stats(){
                                 ");
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_OBJ)){
-            $rows[] = "<tr><td>$row->lang_name</td><td>$row->stat</td></tr>";
+            $rows[] = "<tr><td>$row->name</td><td>$row->stat</td></tr>";
         }
     }
     catch (PDOException $e){

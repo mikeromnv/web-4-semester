@@ -201,14 +201,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else {
 
-//   $fio = $_POST['fio'];
-//   $num = $_POST['number'];
-//   $email = $_POST['email'];
-//   $bdate = $_POST['birthdate'];
-//   $biography = $_POST['biography'];
-//   $gen = $_POST['radio-group-1'];
-//   $languages = $_POST['languages'] ?? []; 
-
   // Проверяем ошибки.
   $errors_validate = FALSE;
   if (empty($_POST['fio'])) {
@@ -339,8 +331,8 @@ else {
   
     if(!empty($_POST['uid'])) {
       $user_id = $_POST['uid'];
-      $languages = $_POST['languages'] ?? [];
-      UPDATE($user_id, $_POST['fio'], $_POST['number'], $_POST['email'], $_POST['birthdate'], $_POST['radio-group-1'], $_POST['biography'], isset($_POST["checkbox"]) ? 1 : 0, $languages);
+      $languages = $_POST['favorite_languages'] ?? [];
+      UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['birth_date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
       header('Location: admin.php');
       
       exit();
@@ -353,7 +345,8 @@ else {
     if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
       try {
         $user_id=getUID($_SESSION['login']);
-        UPDATE($user_id, $_POST['fio'], $_POST['number'], $_POST['email'], $_POST['birthdate'], $_POST['radio-group-1'], $_POST['biography'], isset($_POST["checkbox"]) ? 1 : 0, $languages);
+        $languages = $_POST['favorite_languages'] ?? [];
+        UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['birth_date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
       }
       catch(PDOException $e){
         print('Error : ' . $e->getMessage());
