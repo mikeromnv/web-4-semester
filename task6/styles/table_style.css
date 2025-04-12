@@ -105,3 +105,8 @@ tbody td{
     font-size: 20px;
 }
 
+.logout_button{
+    position: absolute;
+    top: 15;
+    right: 15;
+}

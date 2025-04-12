@@ -5,7 +5,7 @@
 function getAllLangs($db){
     try{
       $all_languages=[];
-      $data = $db->query("SELECT name FROM programming_languages")->fetchAll();
+      $data = $databaseConnection->query("SELECT name FROM programming_languages")->fetchAll();
       foreach ($data as $lang) {
         $lang_name = $lang['name'];
         $all_languages[$lang_name] = $lang_name;
@@ -18,10 +18,10 @@ function getAllLangs($db){
 }
 
 function AdminLogin($login) {
-    global $db;
+    global $databaseConnection;
     $check = false;
     try{
-      $stmt = $db->prepare("SELECT login FROM login_users WHERE role='admin'");
+      $stmt = $databaseConnection->prepare("SELECT login FROM login_users WHERE role='admin'");
       $stmt->execute();
   
       while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -38,10 +38,10 @@ function AdminLogin($login) {
 }
 
 function AdminPassword($login, $password) {
-    global $db;
+    global $databaseConnection;
     $passw;
     try{
-      $stmt = $db->prepare("SELECT password_hash FROM login_users WHERE login = ? AND role='admin' ");
+      $stmt = $databaseConnection->prepare("SELECT password_hash FROM login_users WHERE login = ? AND role='admin' ");
       $stmt->execute([$login]);
       $passw = $stmt->fetchColumn();
       if($passw===false){
@@ -73,9 +73,9 @@ function emailExists($email, $pdo) {
 }
 
 function isLogin($login) {
-  global $db;
+  global $databaseConnection;
   try {
-      $stmt = $db->prepare("SELECT COUNT(*) FROM login_users WHERE login = ? GROUP BY login");
+      $stmt = $databaseConnection->prepare("SELECT COUNT(*) FROM login_users WHERE login = ? GROUP BY login");
       $stmt->execute([$login]);
       return (int) $stmt->fetchColumn();
   } catch (PDOException $e) {
@@ -85,9 +85,9 @@ function isLogin($login) {
 }
 
 function isRightPassword($login, $password) {
-  global $db;
+  global $databaseConnection;
   try {
-      $stmt = $db->prepare("SELECT password_hash FROM login_users WHERE login = ? GROUP BY login");
+      $stmt = $databaseConnection->prepare("SELECT password_hash FROM login_users WHERE login = ? GROUP BY login");
       $stmt->execute([$login]);
       $hash_passw = $stmt->fetchColumn();
 
