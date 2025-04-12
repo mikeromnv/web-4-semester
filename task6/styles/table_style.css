@@ -1,6 +1,8 @@
 html{
     background-color:rgb(244, 244, 252);
     font-family: "Mac";
+    background-image: url('../images/bckg.jpg');
+    background-size: cover;
 }
 
 body{
@@ -17,10 +19,10 @@ table{
     margin-right: auto;
     margin-top: 3%;
     margin-bottom: 3%;
-    background-color: rgb(140, 140, 162);
+    background-color: #1b9e14;
     border-radius: 10px;
     border-width: 4px;
-    border-color: rgb(165, 151, 198);
+    border-color: rgb(0, 0, 0);
     border-style: ridge;
     border-spacing: 1px;
 }
@@ -32,23 +34,23 @@ thead{
 }
 
 thead td{
-    background-color: rgb(170, 170, 206);
+    background-color: #1b9e14;
     margin-left: 5px;
     padding: 10px;
     border-radius: 7px;
     border-style:outset;
-    border-color:rgb(158, 158, 198);
+    border-color:#bef14b;
     color:rgb(47, 46, 66);
 }
 tbody{
-    background-color: blue;
+    background-color: #bef14b;
     margin:-1px;
 }
 tbody td{
-    background-color: rgb(216, 216, 244);
+    background-color: #1b9e14;
     padding: 10px;
     border-style:outset;
-    border-color:rgb(158, 158, 198);
+    border-color:#bef14b;
     color:rgb(47, 46, 66);
     border-radius: 4px;
 }
