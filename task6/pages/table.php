@@ -20,7 +20,7 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
     <table>
         <thead> 
             <tr>
-                <td>ID</td><td>LOGIN</td><td>FIO</td><td>NUMBER</td><td>EMAIL</td><td>GENDER</td><td>BIO</td><td>DATA</td><td>CHECK</td><td>LANGUAGES</td><td>CHANGE</td>
+                <td>ID</td><td>LOGIN</td><td>FIO</td><td>PHONE</td><td>EMAIL</td><td>GENDER</td><td>BIO</td><td>DATA</td><td>CONTRACT</td><td>LANGUAGES</td><td>ACTION</td>
             </tr>
         </thead> 
 
@@ -35,7 +35,7 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
 
     <table>
         <thead> 
-            <tr><td>LANGUAGE</td><td>Q</td></tr>
+            <tr><td>LANGUAGE</td><td>SUM</td></tr>
         </thead> 
         <tbody>
             <?php
