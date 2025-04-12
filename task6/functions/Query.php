@@ -47,14 +47,17 @@ function users_table(){
                 $r.="<td>$field</td>";
             }
 
-            $sql = "select pl.name from programming_languages pl JOIN user_languages ul ON pl.id=ul.language_id where ul.user_id = :login;";
+            $sql = "SELECT pl.name 
+                    FROM programming_languages pl 
+                    JOIN user_languages ul ON pl.id = ul.language_id 
+                    WHERE ul.user_id = :uid";
             
-                $stmt_lang = $db->prepare($sql);
-                $stmt_lang->bindValue(':login', $uid, PDO::PARAM_INT);
-                $stmt_lang->execute();
-                $lang = $stmt_lang->fetchAll(PDO::FETCH_COLUMN, 0);
-                $langs_value1 =(implode(", ", $lang));
-                $r.="<td>$langs_value1</td>";
+            $stmt_lang = $db->prepare($sql);
+            $stmt_lang->bindValue(':uid', $uid, PDO::PARAM_INT);
+            $stmt_lang->execute();
+            $lang = $stmt_lang->fetchAll(PDO::FETCH_COLUMN, 0);
+            $langs_value1 =(implode(", ", $lang));
+            $r.="<td>$langs_value1</td>";
 
             $r.="<td class=\"buttons\">
             <form action=\"admin.php\" method=\"POST\">
