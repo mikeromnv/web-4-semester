@@ -6,7 +6,9 @@ html{
     background-image: url('../images/bckg.jpg');
     background-size: cover;
 }
-
+a{
+    text-decoration: none;
+}
 body{
     width:100%;
     margin-left: auto;
@@ -57,6 +59,8 @@ tbody td{
     text-align: center;
 }
 .delete_button{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     background-color: #e13815;
     border-radius: 3px;
     color: rgb(0, 0, 0);
@@ -64,7 +68,8 @@ tbody td{
     padding: 3px;
 }
 .change_button{
-    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     padding: 3px;
     background-color: #ade912;
     border-radius: 3px;
@@ -73,6 +78,8 @@ tbody td{
 }
 
 .message{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     border: 3px outset rgb(92, 171, 84);
     border-radius: 3px;
     background-color: #ade912;
