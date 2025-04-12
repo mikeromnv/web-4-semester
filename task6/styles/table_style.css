@@ -1,5 +1,6 @@
 html{
     font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
     background-color:rgb(244, 244, 252);
     font-family: "Mac";
     background-image: url('../images/bckg.jpg');
@@ -62,8 +63,10 @@ tbody td{
     padding: 3px;
 }
 .change_button{
+    text-decoration: none;
     padding: 3px;
     background-color: #ade912;
+    border-radius: 3px;
     color: rgb(0, 0, 0);
     margin: 1px;
     font-family: "Mac";
@@ -80,6 +83,7 @@ tbody td{
 
 .success_admin{
     display: flex;
+    text-align: center;
     margin: 0 auto;
     margin-top: 7px;
     justify-content: center;
@@ -89,8 +93,6 @@ tbody td{
     box-shadow: 0 0 20px #adb3a9;
     border-radius: 5px;
     padding: 7px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
     font-size: 20px;
 }
 

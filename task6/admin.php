@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     exit();
   }
 
-  print('<div class="success_admin">Вы успешно авторизовались и видите защищенные паролем данные.<div>');
+  print('<div class="success_admin">Вы успешно авторизовались и видите защищенные паролем данные.</div>');
 
   $language_table = language_stats();
   $user_table = users_table();
