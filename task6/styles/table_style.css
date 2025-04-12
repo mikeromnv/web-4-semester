@@ -16,6 +16,8 @@ body{
 }
 
 table{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
     background-color: #84a352a6;
     width: 99%;
     margin-left: auto;
@@ -59,7 +61,6 @@ tbody td{
     border-radius: 3px;
     color: rgb(0, 0, 0);
     margin: 1px;
-    font-family: "Mac";
     padding: 3px;
 }
 .change_button{
@@ -69,7 +70,6 @@ tbody td{
     border-radius: 3px;
     color: rgb(0, 0, 0);
     margin: 1px;
-    font-family: "Mac";
 }
 
 .message{
@@ -82,6 +82,8 @@ tbody td{
 
 
 .success_admin{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     display: flex;
     text-align: center;
     margin: 0 auto;
