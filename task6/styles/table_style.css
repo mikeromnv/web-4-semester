@@ -34,25 +34,20 @@ thead{
 }
 
 thead td{
-    background-color: #1b9e14;
+    background-color: #cb7134;;
     margin-left: 5px;
     padding: 10px;
-    border-radius: 7px;
-    border-style:outset;
-    border-color:#bef14b;
-    color:rgb(47, 46, 66);
+    color:rgb(0, 0, 0);
 }
 tbody{
-    background-color: #bef14b;
+    background-color: #84a352;
     margin:-1px;
 }
 tbody td{
-    background-color: #1b9e14;
+    background-color: #84a352;
+    text-align: center;
     padding: 10px;
-    border-style:outset;
-    border-color:#bef14b;
     color:rgb(47, 46, 66);
-    border-radius: 4px;
 }
 
 .buttons{
@@ -60,17 +55,16 @@ tbody td{
     text-align: center;
 }
 .delete_button{
-    border: 3px outset rgb(206, 86, 122);
-    background-color: #febbcb;
+    background-color: #e13815;
     border-radius: 3px;
     color: rgb(134, 52, 63);
     margin: 1px;
     font-family: "Mac";
+    padding: 3px;
 }
 .change_button{
-    border: 3px outset rgb(92, 171, 84);
-    border-radius: 3px;
-    background-color: #c2febb;
+    padding: 3px;
+    background-color: #ade912;
     color: rgb(44, 105, 50);
     margin: 1px;
     font-family: "Mac";
@@ -79,7 +73,7 @@ tbody td{
 .message{
     border: 3px outset rgb(92, 171, 84);
     border-radius: 3px;
-    background-color: #c2febb;
+    background-color: #ade912;
     color: rgb(44, 105, 50);
     margin: 1px;
 }
