@@ -1,217 +1,218 @@
 <?php
 
-global $db;
-$user = 'u68604'; // Заменить на ваш логин uXXXXX
-$pass = '5411397'; // Заменить на пароль
-$db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+global $databaseConnection;
+$dbUser = 'u68604';
+$dbPassword = '5411397';
+$databaseConnection = new PDO('mysql:host=localhost;dbname=u68604', $dbUser, $dbPassword,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 function language_stats(){
-    global $db;
-    $rows = array();
+    global $databaseConnection;
+    $languageRows = array();
     try {
-        $stmt = $db->prepare("SELECT pl.name, COUNT(ul.user_id) AS stat 
+        $statement = $databaseConnection->prepare("SELECT pl.name, COUNT(ul.user_id) AS stat 
                                 FROM user_languages ul 
                                 JOIN programming_languages pl ON ul.language_id = pl.id 
                                 GROUP BY pl.name
                                 ");
-        $stmt->execute();
-        while($row = $stmt->fetch(PDO::FETCH_OBJ)){
-            $rows[] = "<tr><td>$row->name</td><td>$row->stat</td></tr>";
+        $statement->execute();
+        while($rowData = $statement->fetch(PDO::FETCH_OBJ)){
+            $languageRows[] = "<tr><td>$rowData->name</td><td>$rowData->stat</td></tr>";
         }
     }
-    catch (PDOException $e){
-        print('ERROR : ' . $e->getMessage());
+    catch (PDOException $exception){
+        print('ERROR : ' . $exception->getMessage());
         exit();
     }
-    return $rows;
+    return $languageRows;
 }
 
 function users_table(){
-    global $db;
-    $rows = array();
+    global $databaseConnection;
+    $userRows = array();
     try{
-        $stmt = $db->prepare("SELECT login, user_id, role FROM login_users WHERE role='user' ORDER BY user_id DESC");
-        $stmt->execute();
-        $log;
-        $uid;
-        while($row = $stmt->fetch(PDO::FETCH_OBJ)){
-            $log=$row->login;
-            $uid=$row->user_id;
-            $r = "<tr><td>$uid</td><td>$log</td>";
+        $mainStatement = $databaseConnection->prepare("SELECT login, user_id, role FROM login_users WHERE role='user' ORDER BY user_id DESC");
+        $mainStatement->execute();
+        $userLogin;
+        $userId;
+        while($userRow = $mainStatement->fetch(PDO::FETCH_OBJ)){
+            $userLogin = $userRow->login;
+            $userId = $userRow->user_id;
+            $rowContent = "<tr><td>$userId</td><td>$userLogin</td>";
 
-            $form_data = $db->prepare("SELECT full_name, phone, email, gender AS gen, bio AS bio, birth_date, contract_accepted FROM users WHERE id = ?");
-            $form_data->execute([$uid]);
-            $mas = $form_data->fetch(PDO::FETCH_ASSOC);
-            foreach($mas as $field) {
-                $r.="<td>$field</td>";
+            $userDataStatement = $databaseConnection->prepare("SELECT full_name, phone, email, gender AS gen, bio AS bio, birth_date, contract_accepted FROM users WHERE id = ?");
+            $userDataStatement->execute([$userId]);
+            $userData = $userDataStatement->fetch(PDO::FETCH_ASSOC);
+            foreach($userData as $fieldValue) {
+                $rowContent .= "<td>$fieldValue</td>";
             }
 
-            $sql = "SELECT pl.name 
+            $langQuery = "SELECT pl.name 
                     FROM programming_languages pl 
                     JOIN user_languages ul ON pl.id = ul.language_id 
                     WHERE ul.user_id = :uid";
             
-            $stmt_lang = $db->prepare($sql);
-            $stmt_lang->bindValue(':uid', $uid, PDO::PARAM_INT);
-            $stmt_lang->execute();
-            $lang = $stmt_lang->fetchAll(PDO::FETCH_COLUMN, 0);
-            $langs_value1 =(implode(", ", $lang));
-            $r.="<td>$langs_value1</td>";
+            $langStatement = $databaseConnection->prepare($langQuery);
+            $langStatement->bindValue(':uid', $userId, PDO::PARAM_INT);
+            $langStatement->execute();
+            $userLangs = $langStatement->fetchAll(PDO::FETCH_COLUMN, 0);
+            $langsString = implode(", ", $userLangs);
+            $rowContent .= "<td>$langsString</td>";
 
-            $r.="<td class=\"buttons\">
+            $rowContent .= "<td class=\"buttons\">
             <form action=\"admin.php\" method=\"POST\">
-            <input type=\"hidden\" name=\"del_by_uid\" value=\"$uid\">
+            <input type=\"hidden\" name=\"del_by_uid\" value=\"$userId\">
             <input class=\"delete_button\" type=\"submit\" value=\"УДАЛИТЬ\">
             </form>";
 
-            $r.="<br><div class=\"change_button\">
-            <a href=\"index.php?uid=$row->user_id\">ИЗМЕНИТЬ</a>
+            $rowContent .= "<br><div class=\"change_button\">
+            <a href=\"index.php?uid=$userRow->user_id\">ИЗМЕНИТЬ</a>
             </div></td></tr>";
 
-            $rows[]=$r;
+            $userRows[] = $rowContent;
         }
     } 
-    catch (PDOException $e){
-        print('ERROR : ' . $e->getMessage());
+    catch (PDOException $exception){
+        print('ERROR : ' . $exception->getMessage());
         exit();
     }
-    return $rows;
+    return $userRows;
 }
 
-function del_by_uid($uid){
-    global $db;
+function del_by_uid($userId){
+    global $databaseConnection;
     try{
-        $stmt_delete_lang = $db->prepare("DELETE FROM user_languages WHERE user_id=?");
-        $stmt_delete_application = $db->prepare("DELETE FROM users WHERE id=?");
-        $stmt_delete_user = $db->prepare("DELETE FROM login_users WHERE user_id=?");
-        $stmt_delete_lang->execute([$uid]);
-        $stmt_delete_user->execute([$uid]);
-        $stmt_delete_application->execute([$uid]);
+        $langDelete = $databaseConnection->prepare("DELETE FROM user_languages WHERE user_id=?");
+        $userDelete = $databaseConnection->prepare("DELETE FROM users WHERE id=?");
+        $loginDelete = $databaseConnection->prepare("DELETE FROM login_users WHERE user_id=?");
+        $langDelete->execute([$userId]);
+        $loginDelete->execute([$userId]);
+        $userDelete->execute([$userId]);
       }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
+    catch(PDOException $exception){
+        print('Error : ' . $exception->getMessage());
         exit();
     }
 }
 
-function getUID($login){
-    global $db;
-    $uid;
+function getUID($userLogin){
+    global $databaseConnection;
+    $userId;
     try {
-        $stmt_select = $db->prepare("SELECT user_id FROM login_users WHERE login=?");
-        $stmt_select->execute([$login]);
-        $uid = $stmt_select->fetchColumn();
-    } catch (PDOException $e){
-        print('Error : ' . $e->getMessage());
+        $idStatement = $databaseConnection->prepare("SELECT user_id FROM login_users WHERE login=?");
+        $idStatement->execute([$userLogin]);
+        $userId = $idStatement->fetchColumn();
+    } catch (PDOException $exception){
+        print('Error : ' . $exception->getMessage());
         exit();
     }
-    return $uid;
-}
-function getlogin($uid){
-    global $db;
-    $login;
-    try {
-        $stmt_select = $db->prepare("SELECT login FROM login_users WHERE user_id=?");
-        $stmt_select->execute([$uid]);
-        $login = $stmt_select->fetchColumn();
-    } catch (PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
-    return $login;
+    return $userId;
 }
 
-function UPDATE($id, $full_name, $phone, $email, $birth_date, $gender, $bio, $contract_accepted, $languages){
-    global $db;
+function getlogin($userId){
+    global $databaseConnection;
+    $userLogin;
     try {
-        $stmt_update = $db->prepare("UPDATE users SET full_name=?, phone=?, email=?, birth_date=?, gender=?, bio=?, contract_accepted=? WHERE id=?");
-        $stmt_update->execute([$full_name, $phone, $email, $birth_date, $gender, $bio, $contract_accepted, $id ]);
+        $loginStatement = $databaseConnection->prepare("SELECT login FROM login_users WHERE user_id=?");
+        $loginStatement->execute([$userId]);
+        $userLogin = $loginStatement->fetchColumn();
+    } catch (PDOException $exception){
+        print('Error : ' . $exception->getMessage());
+        exit();
+    }
+    return $userLogin;
+}
+
+function UPDATE($userId, $fullName, $phoneNumber, $emailAddress, $birthDate, $genderType, $bioText, $contractStatus, $programmingLangs){
+    global $databaseConnection;
+    try {
+        $updateStatement = $databaseConnection->prepare("UPDATE users SET full_name=?, phone=?, email=?, birth_date=?, gender=?, bio=?, contract_accepted=? WHERE id=?");
+        $updateStatement->execute([$fullName, $phoneNumber, $emailAddress, $birthDate, $genderType, $bioText, $contractStatus, $userId ]);
     
-        $stmt_delete = $db->prepare("DELETE FROM user_languages WHERE user_id=?");
-        $stmt_delete -> execute([$id]);
+        $deleteLangs = $databaseConnection->prepare("DELETE FROM user_languages WHERE user_id=?");
+        $deleteLangs->execute([$userId]);
 
-        $stmt_select = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
+        $langSelect = $databaseConnection->prepare("SELECT id FROM programming_languages WHERE name = ?");
 
-        $stmt_lang_update = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?,?)");
-        foreach ($languages as $language) {
-            $stmt_select ->execute([$language]);
-            $id_lang = $stmt_select->fetchColumn();
+        $langInsert = $databaseConnection->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?,?)");
+        foreach ($programmingLangs as $langName) {
+            $langSelect->execute([$langName]);
+            $langId = $langSelect->fetchColumn();
       
-            if ($id_lang) {
-                $stmt_lang_update->execute([$id, $id_lang]);
+            if ($langId) {
+                $langInsert->execute([$userId, $langId]);
             }
         }
-    } catch (PDOException $e){
-        print('update Error : ' . $e->getMessage());
+    } catch (PDOException $exception){
+        print('update Error : ' . $exception->getMessage());
         exit();
     }
 }
 
-function INSERT($login, $hash_password){
-    global $db;
+function INSERT($newLogin, $hashedPassword){
+    global $databaseConnection;
     try{
-        $stmt = $db->prepare("INSERT INTO users (full_name, phone, email, birth_date, gender, bio, contract_accepted ) values (?, ?, ?, ?, ?, ?, ? )");
-        $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
-    } catch (PDOException $e){
-        print('Error : ' . $e->getMessage());
+        $userInsert = $databaseConnection->prepare("INSERT INTO users (full_name, phone, email, birth_date, gender, bio, contract_accepted ) values (?, ?, ?, ?, ?, ?, ? )");
+        $userInsert->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0]);
+    } catch (PDOException $exception){
+        print('Error : ' . $exception->getMessage());
         exit();
     }
-    $id=$db->lastInsertId();
+    $newId = $databaseConnection->lastInsertId();
     try{
-        $stmt_select = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
-        $stmt_insert = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
-        $languages = $_POST['favorite_languages'] ?? [];
-        foreach ($languages as $language) {
-          $stmt_select ->execute([$language]);
-          $id_lang = $stmt_select->fetchColumn();
+        $langSelect = $databaseConnection->prepare("SELECT id FROM programming_languages WHERE name = ?");
+        $langInsert = $databaseConnection->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
+        $selectedLangs = $_POST['favorite_languages'] ?? [];
+        foreach ($selectedLangs as $langName) {
+          $langSelect->execute([$langName]);
+          $langId = $langSelect->fetchColumn();
           
-          if ($id_lang) {
-            $stmt_insert->execute([$id, $id_lang]);
+          if ($langId) {
+            $langInsert->execute([$newId, $langId]);
           }
         }
-    } catch (PDOException $e) {
-        print('Error : ' . $e->getMessage());
+    } catch (PDOException $exception) {
+        print('Error : ' . $exception->getMessage());
         exit();
     }
     try {
-        $stmt_insert = $db->prepare("INSERT INTO login_users (login, password_hash, role, user_id ) VALUES (?, ?, ?, ?)");
-        $stmt_insert->execute([ $login, $hash_password, "user", $id]);
-    } catch (PDOException $e){
-        print('Error : ' . $e->getMessage());
+        $loginInsert = $databaseConnection->prepare("INSERT INTO login_users (login, password_hash, role, user_id ) VALUES (?, ?, ?, ?)");
+        $loginInsert->execute([$newLogin, $hashedPassword, "user", $newId]);
+    } catch (PDOException $exception){
+        print('Error : ' . $exception->getMessage());
         exit();
     }
 }
 
-function INSERTData($login){
-    global $db;
-    $uid=getUID($login);
-    $values = array();
+function INSERTData($userLogin){
+    global $databaseConnection;
+    $userId = getUID($userLogin);
+    $fieldValues = array();
     try{
-        $mas=[];
-        $stmt = $db->prepare("SELECT full_name as fio, phone, email, bio as biography, gender, birth_date as date, contract_accepted as contract FROM users WHERE id = ?");
-        $stmt->execute([$uid]);
-        $mas = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = [];
+        $dataStatement = $databaseConnection->prepare("SELECT full_name as fio, phone, email, bio as biography, gender, birth_date as date, contract_accepted as contract FROM users WHERE id = ?");
+        $dataStatement->execute([$userId]);
+        $userData = $dataStatement->fetch(PDO::FETCH_ASSOC);
         $fields = ['fio', 'phone', 'email', 'biography', 'date', 'gender', 'contract'];
         foreach($fields as $field) {
-            $values[$field] = strip_tags($mas[$field]);
+            $fieldValues[$field] = strip_tags($userData[$field]);
         }
-    } catch (PDOException $e){
-        print('ERROR : ' . $e->getMessage());
+    } catch (PDOException $exception){
+        print('ERROR : ' . $exception->getMessage());
         exit();
     }
-    $sql = "SELECT pl.name FROM programming_languages pl JOIN user_languages ul ON pl.id = ul.language_id WHERE ul.user_id = :uid;";
+    $langQuery = "SELECT pl.name FROM programming_languages pl JOIN user_languages ul ON pl.id = ul.language_id WHERE ul.user_id = :uid;";
     try{
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':uid', $uid, PDO::PARAM_INT);
-        $stmt->execute();
-        $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        $langs_value1 =(implode(",", $lang));
-        $values['favorite_languages']=$langs_value1;
-    } catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
+        $langStatement = $databaseConnection->prepare($langQuery);
+        $langStatement->bindValue(':uid', $userId, PDO::PARAM_INT);
+        $langStatement->execute();
+        $userLangs = $langStatement->fetchAll(PDO::FETCH_COLUMN, 0);
+        $langsString = implode(",", $userLangs);
+        $fieldValues['favorite_languages'] = $langsString;
+    } catch(PDOException $exception){
+        print('Error : ' . $exception->getMessage());
         exit();
     }
-    return $values;
+    return $fieldValues;
 }
 ?>
