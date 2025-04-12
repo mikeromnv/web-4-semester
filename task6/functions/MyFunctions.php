@@ -3,6 +3,7 @@
 
 
 function getAllLangs($db){
+  global $databaseConnection;
     try{
       $all_languages=[];
       $data = $databaseConnection->query("SELECT name FROM programming_languages")->fetchAll();
