@@ -19,10 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
     // Выдаем сообщение об успешном сохранении.
     if (!empty($_COOKIE['save'])) {
-      // Удаляем куку, указывая время устаревания в прошлом.
-      setcookie('save', '', 100000);
-      setcookie('login', '', 100000);
-      setcookie('pass', '', 100000);
+      
       // Выводим сообщение пользователю.
       $messages_log[] = 'Спасибо, результаты сохранены.';
       // Если в куках есть пароль, то выводим сообщение.
@@ -32,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           strip_tags($_COOKIE['login']),
           strip_tags($_COOKIE['pass']));
       }
+      // Удаляем куку, указывая время устаревания в прошлом.
+      setcookie('save', '', 100000);
+      setcookie('login', '', 100000);
+      setcookie('pass', '', 100000);
     }
   
     // Складываем признак ошибок в массив.
@@ -327,6 +328,8 @@ else {
       
       setcookie('login', $login);
       setcookie('pass', $pass);
+      echo strip_tags($_COOKIE['login']);
+      echo  strip_tags($_COOKIE['pass']);
       try {
         INSERT($login, $pass_hash);
         echo "INSERT прошёл!";
