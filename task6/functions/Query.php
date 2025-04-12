@@ -189,10 +189,10 @@ function INSERTData($login){
     $values = array();
     try{
         $mas=[];
-        $stmt = $db->prepare("SELECT full_name, phone, email, bio, gender, birth_date, contract_accepted FROM users WHERE id = ?");
+        $stmt = $db->prepare("SELECT full_name as fio, phone, email, bio as biography, gender, birth_date as date, contract_accepted as contract FROM users WHERE id = ?");
         $stmt->execute([$uid]);
         $mas = $stmt->fetch(PDO::FETCH_ASSOC);
-        $fields = ['full_name', 'phone', 'email', 'bio', 'birth_date', 'gender', 'contract_accepted'];
+        $fields = ['fio', 'phone', 'email', 'biography', 'date', 'gender', 'contract'];
         foreach($fields as $field) {
             $values[$field] = strip_tags($mas[$field]);
         }
