@@ -203,7 +203,7 @@ function INSERTData($login){
     $sql = "SELECT pl.name FROM programming_languages pl JOIN user_languages ul ON pl.id = ul.language_id WHERE ul.user_id = :uid;";
     try{
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':login', $uid, PDO::PARAM_INT);
+        $stmt->bindValue(':uid', $uid, PDO::PARAM_INT);
         $stmt->execute();
         $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         $langs_value1 =(implode(",", $lang));
