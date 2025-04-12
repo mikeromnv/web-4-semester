@@ -139,7 +139,7 @@ function UPDATE($id, $full_name, $phone, $email, $birth_date, $gender, $bio, $co
             $id_lang = $stmt_select->fetchColumn();
       
             if ($id_lang) {
-                $stmt_lang_update->execute([$user_id, $id_lang]);
+                $stmt_lang_update->execute([$id, $id_lang]);
             }
         }
     } catch (PDOException $e){
@@ -161,7 +161,7 @@ function INSERT($login, $hash_password){
     try{
         $stmt_select = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
         $stmt_insert = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
-        $languages = $_POST['languages'] ?? [];
+        $languages = $_POST['favorite_languages'] ?? [];
         foreach ($languages as $language) {
           $stmt_select ->execute([$language]);
           $id_lang = $stmt_select->fetchColumn();
@@ -207,7 +207,7 @@ function INSERTData($login){
         $stmt->execute();
         $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         $langs_value1 =(implode(",", $lang));
-        $values['lang']=$langs_value1;
+        $values['favorite_languages']=$langs_value1;
     } catch(PDOException $e){
         print('Error : ' . $e->getMessage());
         exit();

@@ -158,44 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $login_message='Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
     $messages[] = $login_message;
   }
-  /*
-
-    if (!empty($_SESSION['login'])) {
-
-      try{
-        $mas=[];
-
-        $stmt = $db->prepare("SELECT fio, number, email, biography AS bio, gender AS gen, bdate, checkbox FROM application WHERE id = ?");
-        $stmt->execute([$_SESSION['uid']]);
-        $mas = $stmt->fetch(PDO::FETCH_ASSOC);
-        $fields = ['fio', 'number', 'email', 'bio', 'gen', 'bdate', 'checkbox'];
-        foreach($fields as $field) {
-            $values[$field] = strip_tags($mas[$field]);
-        }
-      } 
-      catch (PDOException $e){
-        print('ERROR : ' . $e->getMessage());
-        exit();
-      }
-
-      $sql = "select pl.lang_name from prog_lang pl JOIN user_lang ul ON pl.id_lang=ul.id_lang where ul.id = :login;";
-          try{
-              $stmt = $db->prepare($sql);
-              $stmt->bindValue(':login', $_SESSION['uid'], PDO::PARAM_STR);
-              $stmt->execute();
-              $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-              $langs_value1 =(implode(",", $lang));
-              $values['lang']=$langs_value1;
-          }
-          catch(PDOException $e){
-              print('Error : ' . $e->getMessage());
-              exit();
-          }
-
-      $login_message='Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
-      $messages[] = $login_message;
-    }
-  */
+  
 
   include('pages/formPage.php');
 }
@@ -332,7 +295,7 @@ else {
     if(!empty($_POST['uid'])) {
       $user_id = $_POST['uid'];
       $languages = $_POST['favorite_languages'] ?? [];
-      UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['birth_date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
+      UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
       header('Location: admin.php');
       
       exit();
@@ -346,7 +309,7 @@ else {
       try {
         $user_id=getUID($_SESSION['login']);
         $languages = $_POST['favorite_languages'] ?? [];
-        UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['birth_date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
+        UPDATE($user_id, $_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography'], isset($_POST["contract"]) ? 1 : 0, $languages);
       }
       catch(PDOException $e){
         print('Error : ' . $e->getMessage());
