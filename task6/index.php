@@ -197,28 +197,20 @@ else {
   $email=trim($_POST['email']);
   if (emailExists($email, $db) && session_start())  { 
     $current_id;
-    $is_admin = false;
-    
-    try {
-        // Получаем ID пользователя с этим email
-        $dp = $db->prepare("SELECT id FROM users WHERE email = ?");
-        $dp->execute([$email]);
-        $current_id = $dp->fetchColumn();
-        
-        // Проверяем, является ли текущий пользователь админом
-        $admin_check = $db->prepare("SELECT 1 FROM login_users WHERE user_id = ? AND role = 'admin'");
-        $admin_check->execute([$_SESSION['uid']]);
-        $is_admin = (bool)$admin_check->fetchColumn();
-        
-    } catch(PDOException $e) {
-        print('Error : ' . $e->getMessage());
-        exit();
+    try{
+          $dp=$db->prepare("SELECT id from users where email=?");
+          $dp->execute([$email]);
+          $current_id = $dp->fetchColumn();
     }
-   
-    // Если это не текущий пользователь И пользователь не админ - ошибка
-    if($current_id !== $_SESSION['uid'] && !$is_admin) {
-        setcookie('email_error', '2', time() + 24 * 60 * 60);
-        $errors_validate = true;
+    catch(PDOException $e){
+      print('Error : ' . $e->getMessage());
+      exit();
+    }
+    $adminIDs = getADMIN_ID();
+
+    if($current_id!==$_SESSION['uid'] || !in_array((getUID([$_SESSION[$user_log]])), $adminIDs)) {
+      setcookie('email_error', '2', time() + 24 * 60 * 60);
+      $errors_validate = TRUE;
     }     
   }
   elseif (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
