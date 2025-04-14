@@ -6,6 +6,24 @@ $dbPassword = '5411397';
 $databaseConnection = new PDO('mysql:host=localhost;dbname=u68604', $dbUser, $dbPassword,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+
+function getADMIN_ID(){
+    global $databaseConnection;
+    $adminIds= array();
+    try{
+        $stmt = $databaseConnection->prepare("SELECT id FROM users WHERE role = 'admin'");
+        $stmt->execute();
+        $adminIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+    }
+    catch (PDOException $exception){
+        print('ERROR : ' . $exception->getMessage());
+        exit();
+    }
+    return $adminIds;
+}
+
+
 function language_stats(){
     global $databaseConnection;
     $languageRows = array();
