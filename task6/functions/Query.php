@@ -23,15 +23,16 @@ function getADMIN_ID(){
     return $adminIds;
 }
 
-function getAdmin_log()
-{
+function getAdmin_log() {
     global $databaseConnection;
-    $query = "SELECT login FROM login_users where role='admin'"; 
-
-    $stmt = $databaseConnection->prepare($query); 
-    $stmt->execute();
-    $adminlogin = $stmt->fetchColumn();
-    return $adminlogin;
+    try {
+        $stmt = $databaseConnection->prepare("SELECT login FROM login_users WHERE role='admin'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } catch (PDOException $e) {
+        error_log('Error in getAdmin_log: ' . $e->getMessage());
+        return [];
+    }
 }
 
 function language_stats(){
