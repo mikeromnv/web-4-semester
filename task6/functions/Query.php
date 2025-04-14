@@ -11,7 +11,7 @@ function getADMIN_ID(){
     global $databaseConnection;
     $adminIds= array();
     try{
-        $stmt = $databaseConnection->prepare("SELECT id FROM users WHERE role = 'admin'");
+        $stmt = $databaseConnection->prepare("SELECT user_id FROM login_users WHERE role = 'admin'");
         $stmt->execute();
         $adminIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
