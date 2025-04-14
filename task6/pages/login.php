@@ -9,7 +9,7 @@
   <body>
 
     <div id="form-menu" class="form-menu">
-        <form action="" method="post">
+        <form action="" method="POST">
             <p>Логин</p>
             <input name="login" />
             <p>Пароль</p>
