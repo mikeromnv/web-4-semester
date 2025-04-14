@@ -31,7 +31,10 @@
 
   <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-          
+        <?php if (!empty($values['uid'])): ?>
+        <input type="hidden" name="uid" value="<?= $values['uid'] ?>">
+        <?php endif; ?>
+
 
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 

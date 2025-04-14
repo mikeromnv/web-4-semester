@@ -334,7 +334,6 @@ else {
       
       try {
         INSERT($login, $pass_hash);
-        echo "INSERT прошёл!";
       }
       catch(PDOException $e){
         print('Error : ' . $e->getMessage());
