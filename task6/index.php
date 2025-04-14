@@ -195,6 +195,7 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
+  if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  getAdmin_log() || !AdminPassword(adminlog(), $_SERVER['PHP_AUTH_PW'])){
   if (emailExists($email, $db) && session_start())  { 
     $current_id;
     try{
@@ -217,6 +218,7 @@ else {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
+}
   setcookie('email_value', $_POST['email'], time() + 365 * 24 * 60 * 60);
 
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
