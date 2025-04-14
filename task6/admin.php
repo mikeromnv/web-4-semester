@@ -57,7 +57,7 @@ else {
 if (isset($_GET['logout'])) {
   header('HTTP/1.1 401 Unauthorized');
   header('WWW-Authenticate: Basic realm="Admin Area"');
-  exit("Вы вышли из панели администратора. <a href=\"admin.php\">Войти снова</a>");
+  exit("Вы вышли из панели администратора. <a href=\"login.php\">Войти снова</a>");
 }
 
 
