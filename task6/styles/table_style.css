@@ -106,10 +106,12 @@ tbody td{
 }
 
 .logout_button {
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
     position: fixed;
     top: 10px;
     right: 10px;
-    background: #f44336;
+    background: #cb7134;;
     color: white;
     padding: 10px 15px;
     border: none;

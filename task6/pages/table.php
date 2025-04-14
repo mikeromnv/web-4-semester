@@ -16,10 +16,20 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
     <title> ADMIN </title>
   </head>
 
-    <form class="logout_button" action="logout.php" method="GET">
+    <form class="logout_button" action="admin.php" method="GET" onsubmit="clearAuthCache()">
         <input type="hidden" name="logout" value="1">
-        <input type="submit" value="Выйти"/> 
+        <input type="submit" value="Выйти"/>
     </form>
+
+    <script>
+    function clearAuthCache() {
+        // запрос с неверными данными для сброса кеша
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'admin.php?logout=1', false);
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa('logout:'));
+        xhr.send();
+    }
+    </script>
 
     
   <body>
