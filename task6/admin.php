@@ -5,9 +5,13 @@ require_once 'functions/MyFunctions.php';
 
 // Обработка выхода
 if (isset($_GET['logout'])) {
+  unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+  session_unset();
+  session_destroy();
+
   header('HTTP/1.1 401 Unauthorized');
-  header('WWW-Authenticate: Basic realm="My site"');
-  header('Location: admin.php');
+  header('WWW-Authenticate: Basic realm="Admin Area"');
+  header('Location: login.php'); // Перенаправляем на страницу входа
   exit();
 }
 
@@ -54,11 +58,7 @@ else {
         $languages
     );
 }
-if (isset($_GET['logout'])) {
-  header('HTTP/1.1 401 Unauthorized');
-  header('WWW-Authenticate: Basic realm="Admin Area"');
-  exit("Вы вышли из панели администратора. <a href=\"login.php\">Войти снова</a>");
-}
+
 
 
   header('Location: admin.php');
