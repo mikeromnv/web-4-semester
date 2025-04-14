@@ -42,6 +42,8 @@ function language_stats(){
         $statement = $databaseConnection->prepare("SELECT pl.name, COUNT(ul.user_id) AS stat 
                                 FROM user_languages ul 
                                 JOIN programming_languages pl ON ul.language_id = pl.id 
+                                JOIN login_users ON ul.user_id = login_users.user_id
+                                WHERE role != 'admin'
                                 GROUP BY pl.name
                                 ");
         $statement->execute();

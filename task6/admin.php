@@ -4,35 +4,26 @@ require_once 'functions/Query.php';
 require_once 'functions/MyFunctions.php';
 
 // Обработка выхода
-// if (isset($_GET['logout'])) {
-//   unset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-//   session_unset();
-//   session_destroy();
 
+
+// if (isset($_GET['logout'])) {
+//   // Очищаем сессию
+//   $_SESSION = [];
+//   session_destroy();
+  
+//   // Сбрасываем HTTP Basic Auth
 //   header('HTTP/1.1 401 Unauthorized');
 //   header('WWW-Authenticate: Basic realm="Admin Area"');
-//   header('Location: login.php'); // Перенаправляем на страницу входа
+  
+//   // JavaScript для очистки кеша аутентификации
+//   echo '<script>
+//       if (window.location.href.indexOf("logout") > -1) {
+//           window.location.href = "login.php";
+//       }
+//   </script>';
+  
 //   exit();
 // }
-
-if (isset($_GET['logout'])) {
-  // Очищаем сессию
-  $_SESSION = [];
-  session_destroy();
-  
-  // Сбрасываем HTTP Basic Auth
-  header('HTTP/1.1 401 Unauthorized');
-  header('WWW-Authenticate: Basic realm="Admin Area"');
-  
-  // JavaScript для очистки кеша аутентификации
-  echo '<script>
-      if (window.location.href.indexOf("logout") > -1) {
-          window.location.href = "login.php";
-      }
-  </script>';
-  
-  exit();
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 

@@ -1,6 +1,13 @@
-<?php
+<!-- <?php
 if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminLogin($user_log, $databaseConnection) ||
 !AdminPassword($user_log, $user_pass, $databaseConnection)){
+    header('Location: admin.php');
+}
+?> -->
+
+<?php
+if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminLogin($_SERVER['PHP_AUTH_USER']) ||
+!AdminPassword($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])){
     header('Location: admin.php');
 }
 ?>
@@ -16,20 +23,11 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
     <title> ADMIN </title>
   </head>
 
-    <form class="logout_button" action="admin.php" method="GET" onsubmit="clearAuthCache()">
-        <input type="hidden" name="logout" value="1">
-        <input type="submit" value="Выйти"/>
-    </form>
-
-    <script>
-    function clearAuthCache() {
-        // запрос с неверными данными для сброса кеша
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'admin.php?logout=1', false);
-        xhr.setRequestHeader('Authorization', 'Basic ' + btoa('logout:'));
-        xhr.send();
-    }
-    </script>
+    <div class="logout-container">
+      <form action="logout.php" method="POST">
+        <input type="submit" value="ВЫЙТИ" class="logout-button">
+      </form>
+    </div>
 
     
   <body>
