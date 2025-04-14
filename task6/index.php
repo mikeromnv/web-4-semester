@@ -207,7 +207,7 @@ else {
       exit();
     }
     $adminIds = getADMIN_ID();
-    if($current_id!==$_SESSION['uid'] || !in_array($current_id, $adminIds) ) {
+    if($current_id!==$_SESSION['uid'] || !in_array($_SESSION['uid'], $adminIds) ) {
       setcookie('email_error', '2', time() + 24 * 60 * 60);
       $errors_validate = TRUE;
     }     
