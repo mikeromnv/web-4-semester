@@ -7,10 +7,6 @@
     <title> LAB6 </title>
   </head>
 
-  <?php if (isset($_GET['logout'])) {
-    echo '<div class="alert">Вы успешно вышли из системы</div>';
-  }
-  ?>
   <body>
 
     <div id="form-menu" class="form-menu">

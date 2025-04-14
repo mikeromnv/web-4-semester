@@ -24,9 +24,9 @@ if(empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !AdminL
   </head>
 
     <div class="logout-container">
-      <form action="logout.php" method="POST">
-        <input type="submit" value="ВЫЙТИ" class="logout-button">
-      </form>
+        <form class="logout_button" action="login.php" method="POST">
+            <input type="submit" name="logout_admin" value="Выйти"/> 
+        </form>
     </div>
 
     
