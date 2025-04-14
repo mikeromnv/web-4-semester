@@ -195,7 +195,7 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  getAdmin_log() || !AdminPassword(adminlog(), $_SERVER['PHP_AUTH_PW'])){
+  if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  getAdmin_log() || !AdminPassword(getAdmin_log(), $_SERVER['PHP_AUTH_PW'])){
   if (emailExists($email, $db) && session_start())  { 
     $current_id;
     try{

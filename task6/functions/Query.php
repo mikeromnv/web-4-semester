@@ -26,20 +26,12 @@ function getADMIN_ID(){
 function getAdmin_log()
 {
     global $databaseConnection;
-    $logs= array();
-    try{
-        $query = "SELECT login FROM login_users where role='admin'"; 
-        $stmt = $databaseConnection->prepare($query); 
-        $stmt->execute();
-        $logs = $stmt->fetchColumn();
-    
-    }
-    catch (PDOException $exception){
-        print('ERROR : ' . $exception->getMessage());
-        exit();
-    }
+    $query = "SELECT login FROM login_users where role='admin'"; 
 
-    return $logs;
+    $stmt = $databaseConnection->prepare($query); 
+    $stmt->execute();
+    $adminlogin = $stmt->fetchColumn();
+    return $adminlogin;
 }
 
 function language_stats(){
