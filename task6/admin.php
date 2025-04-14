@@ -39,6 +39,20 @@ else {
   if(!empty($_POST['del_by_uid']) && !empty($_SERVER['PHP_AUTH_USER'])){
     del_by_uid($_POST['del_by_uid']);
   } 
-
+  elseif(!empty($_POST['uid']) && !empty($_SERVER['PHP_AUTH_USER'])){
+    $user_id = $_POST['uid'];
+    $languages = $_POST['favorite_languages'] ?? [];
+    UPDATE(
+        $user_id, 
+        $_POST['fio'], 
+        $_POST['phone'], 
+        $_POST['email'], 
+        $_POST['date'], 
+        $_POST['gender'], 
+        $_POST['biography'], 
+        isset($_POST["contract"]) ? 1 : 0, 
+        $languages
+    );
+}
   header('Location: admin.php');
 }
