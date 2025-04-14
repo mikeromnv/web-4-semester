@@ -207,6 +207,9 @@ else {
       exit();
     }
     $adminIds = getADMIN_ID();
+    foreach ($adminIds as $id){
+      echo $id;
+    }
     if($current_id!==$_SESSION['uid'] || !in_array($_SESSION['uid'], $adminIds) ) {
       setcookie('email_error', '2', time() + 24 * 60 * 60);
       $errors_validate = TRUE;
