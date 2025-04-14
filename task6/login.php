@@ -23,9 +23,6 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
   }
 }
 
-if (isset($_GET['logout_admin'])) {
-  echo '<div class="alert" style="color:green; text-align:center; margin:20px; font-size: 20px;">Вы успешно вышли из системы</div>';
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('pages/login.php');
