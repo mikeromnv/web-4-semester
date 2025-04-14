@@ -208,12 +208,10 @@ else {
     }
     $adminIds = getADMIN_ID();
 
-    if($current_id!==$_SESSION['uid']) ) {
-      if (!in_array($_SESSION['uid'], $adminIds)){
-        setcookie('email_error', '2', time() + 24 * 60 * 60);
-        $errors_validate = TRUE;
-      }
+    if($current_id!==$_SESSION['uid'] || !in_array($_SESSION['uid'], $adminIds) ) {
       
+      setcookie('email_error', '2', time() + 24 * 60 * 60);
+      $errors_validate = TRUE;
     }     
   }
   elseif (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
