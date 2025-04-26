@@ -4,14 +4,12 @@ require_once 'functions/Query.php';
 require_once 'functions/MyFunctions.php';
 
 if (isset($_GET['logout'])) {
-  $_SERVER['PHP_AUTH_USER'] = 'logout';
-  $_SERVER['PHP_AUTH_PW']= 'logout';
-  header('Location: login.php');
   header('HTTP/1.1 401 Unauthorized');
   header('WWW-Authenticate: Basic realm="Admin Area"');
-  header('Location: login.php');
+  echo '<h1>Вы вышли из панели администратора. Нажмите отмена в окне авторизации или закройте вкладку.</h1>';
   exit();
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -23,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       !AdminLogin($user_log) ||
       !AdminPassword($user_log, $user_pass)) {
 
-    header('HTTP/1.1 401 Unanthorized');
+    header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Basic realm="My site"');
     print('<h1>401 Требуется авторизация. Доступ запрещен.</h1>');
     exit();
