@@ -88,6 +88,13 @@ tbody td{
 }
 
 .logout_button{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e1c215;
+    border-radius: 3px;
+    color: rgb(0, 0, 0);
+    margin: 1px;
+    padding: 3px;
     position: absolute;
     top: 15;
     right: 15;
@@ -110,17 +117,3 @@ tbody td{
     font-size: 20px;
 }
 
-.logout_button {
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #cb7134;;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-}
