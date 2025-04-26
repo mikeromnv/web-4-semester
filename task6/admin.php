@@ -4,10 +4,8 @@ require_once 'functions/Query.php';
 require_once 'functions/MyFunctions.php';
 
 if (isset($_GET['logout'])) {
-  if(isset($_SERVER['PHP_AUTH_USER']))
-    unset($_SERVER['PHP_AUTH_USER']);
-  if (isset($_SERVER['PHP_AUTH_PW']))
-    unset($_SERVER['PHP_AUTH_PW']);
+  $_SERVER['PHP_AUTH_USER'] = 'logout';
+  $_SERVER['PHP_AUTH_PW']= 'logout';
   header('Location: login.php');
   header('HTTP/1.1 401 Unauthorized');
   header('WWW-Authenticate: Basic realm="Admin Area"');
