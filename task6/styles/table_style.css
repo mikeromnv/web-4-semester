@@ -87,6 +87,11 @@ tbody td{
     margin: 1px;
 }
 
+.logout_button{
+    position: absolute;
+    top: 15;
+    right: 15;
+}
 
 .success_admin{
     font-weight: bold;
