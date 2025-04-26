@@ -1,8 +1,5 @@
 <?php
-
-
-
-function getAllLangs($db){
+function getAllLangs(){
   global $databaseConnection;
     try{
       $all_languages=[];
@@ -56,11 +53,12 @@ function AdminPassword($login, $password) {
     }
 }
 
-function emailExists($email, $pdo) {
+function emailExists($email) {
+  global $databaseConnection;
   $sql = "SELECT COUNT(*) FROM users WHERE email = :email"; 
-  $stmt = $pdo->prepare($sql);
+  $stmt = $databaseConnection->prepare($sql);
   if ($stmt === false) {
-    error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
+    error_log("Ошибка подготовки запроса: " . $databaseConnection->errorInfo()[2]);
     return true; 
   }
   $stmt->bindValue(':email', $email, PDO::PARAM_STR);

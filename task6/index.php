@@ -4,13 +4,13 @@ header('Content-Type: text/html; charset=UTF-8');
 require_once 'functions/Query.php';
 require_once 'functions/MyFunctions.php';
 
-$user = 'u68604'; // Заменить на ваш логин uXXXXX
-$pass = '5411397'; // Заменить на пароль
-$db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
-  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+// $user = 'u68604'; // Заменить на ваш логин uXXXXX
+// $pass = '5411397'; // Заменить на пароль
+// $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
+//   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
-$all_languages=getAllLangs($db);
+$all_languages=getAllLangs();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Массив для временного хранения сообщений пользователю.
@@ -196,10 +196,11 @@ else {
   // EMAIL
   $email=trim($_POST['email']);
   if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !in_array($_SERVER['PHP_AUTH_USER'], getAdmin_log()) || !AdminPassword($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])){
-  if (emailExists($email, $db) && session_start())  { 
+  if (emailExists($email) && session_start())  { 
     $current_id;
     try{
-          $dp=$db->prepare("SELECT id from users where email=?");
+        global $databaseConnection;
+          $dp=$databaseConnection->prepare("SELECT id from users where email=?");
           $dp->execute([$email]);
           $current_id = $dp->fetchColumn();
     }
