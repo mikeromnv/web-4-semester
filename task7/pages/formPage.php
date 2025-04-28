@@ -11,7 +11,7 @@
   <?php 
       if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
         print('<form class="logout_button" action="login.php" method="POST">
-                  <input type="hidden" name="csrf_token" value="'.$_SESSION['csrf_token'].'">
+                  // <input type="hidden" name="csrf_token" value="'.$_SESSION['csrf_token'].'">
                   <input type="submit" name="logout" value="Выйти"/> 
               </form>');
       }
