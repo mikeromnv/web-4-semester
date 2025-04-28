@@ -208,7 +208,7 @@ else {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
-}
+
   setcookie('email_value', $_POST['email'], time() + 365 * 24 * 60 * 60);
 
   // ЯЗЫКИ ПРОГРАММИРОВАНИЯ
