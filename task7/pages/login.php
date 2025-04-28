@@ -11,7 +11,7 @@
 
     <div id="form-menu" class="form-menu">
         <form action="" method="POST">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            <!-- <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>"> -->
             <p>Логин</p>
             <input name="login" type="text" maxlength="50" pattern="[a-zA-Z0-9]+" title="Только буквы и цифры"/>
             <p>Пароль</p>

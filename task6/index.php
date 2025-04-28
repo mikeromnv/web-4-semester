@@ -195,27 +195,7 @@ else {
   setcookie('phone_value', $_POST['phone'], time() + 365 * 24 * 60 * 60);
   // EMAIL
   $email=trim($_POST['email']);
-  if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || !in_array($_SERVER['PHP_AUTH_USER'], getAdmin_log()) || !AdminPassword($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])){
-  if (emailExists($email) && session_start())  { 
-    $current_id;
-    try{
-        global $databaseConnection;
-          $dp=$databaseConnection->prepare("SELECT id from users where email=?");
-          $dp->execute([$email]);
-          $current_id = $dp->fetchColumn();
-    }
-    catch(PDOException $e){
-      print('Error : ' . $e->getMessage());
-      exit();
-    }
-    $adminIDs = getADMIN_ID();
-
-    if($current_id!==$_SESSION['uid'] || !in_array((getUID([$_SESSION[$user_log]])), $adminIDs)) {
-      setcookie('email_error', '2', time() + 24 * 60 * 60);
-      $errors_validate = TRUE;
-    }     
-  }
-  elseif (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+  if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     setcookie('email_error', '1', time() + 24 * 60 * 60);
     $errors_validate = TRUE;
   }
