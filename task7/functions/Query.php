@@ -95,11 +95,12 @@ function users_table(){
             $rowContent .= "<td>$langsString</td>";
 
             $rowContent .= "<td class=\"buttons\">
-                    <form action=\"admin.php\" method=\"POST\">
-                        <input type=\"hidden\" name=\"del_by_uid\" value=\"htmlspecialchars($userId)\">
-                        <input type=\"hidden\" name=\"csrf_token\" value=\"<?= htmlspecialchars($_SESSION['csrf_token']) ?>\">
-                        <input class=\"delete_button\" type=\"submit\" value=\"УДАЛИТЬ\">
-                    </form>;
+                            <form action=\"admin.php\" method=\"POST\">
+                                <input type=\"hidden\" name=\"del_by_uid\" value=\"" . htmlspecialchars($userId) . "\">
+                                <input type=\"hidden\" name=\"csrf_token\" value=\"" . htmlspecialchars($_SESSION['csrf_token']) . "\">
+                                <input class=\"delete_button\" type=\"submit\" value=\"УДАЛИТЬ\">
+                            </form>
+                        </td>";
 
             $rowContent .= "<br><div class=\"change_button\">
             <a href=\"index.php?uid=$userRow->user_id\">ИЗМЕНИТЬ</a>
