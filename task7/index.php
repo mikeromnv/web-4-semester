@@ -1,17 +1,8 @@
 <?php
 
 header('Content-Type: text/html; charset=UTF-8');
-// require_once 'functions/Query.php';
-// require_once 'functions/MyFunctions.php';
-
-$allowedPages = ['formPage.php', 'table.php'];
-$page = 'formPage.php';
-
-if (in_array($page, $allowedPages) && file_exists("pages/$page")) {
-    include("pages/$page");
-} else {
-    die('Недопустимая страница');
-}
+require_once 'functions/Query.php';
+require_once 'functions/MyFunctions.php';
 
 // $user = 'u68604'; // Заменить на ваш логин uXXXXX
 // $pass = '5411397'; // Заменить на пароль
