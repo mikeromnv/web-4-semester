@@ -99,8 +99,7 @@ function users_table(){
                                 <input type=\"hidden\" name=\"del_by_uid\" value=\"" . htmlspecialchars($userId) . "\">
                                 <input type=\"hidden\" name=\"csrf_token\" value=\"" . htmlspecialchars($_SESSION['csrf_token']) . "\">
                                 <input class=\"delete_button\" type=\"submit\" value=\"УДАЛИТЬ\">
-                            </form>
-                        </td>";
+                            </form>";
 
             $rowContent .= "<br><div class=\"change_button\">
             <a href=\"index.php?uid=$userRow->user_id\">ИЗМЕНИТЬ</a>

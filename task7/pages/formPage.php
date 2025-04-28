@@ -32,7 +32,6 @@
   
   <div id="form-menu" class="form-menu">
         <form id="UserForm" class="user-form" action="index.php" method="POST">
-        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
         <?php if (!empty($values['uid'])): ?>
         <input type="hidden" name="uid" value="<?= $values['uid'] ?>">
         <?php endif; ?>
