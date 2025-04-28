@@ -10,7 +10,7 @@ function getAllLangs(){
         $all_languages[$lang_name] = $lang_name;
       }
       return $all_languages;
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
       error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
       echo 'Произошла ошибка. Попробуйте позже.';
       exit();
@@ -30,7 +30,7 @@ function AdminLogin($login) {
         }
       }
     } 
-    catch (PDOException $exception){
+    catch (PDOException $e){
       error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
       echo 'Произошла ошибка. Попробуйте позже.';
       exit();
@@ -50,7 +50,7 @@ function AdminPassword($login, $password) {
       }
       return password_verify($password, $passw);
     } 
-    catch (PDOException $exception){
+    catch (PDOException $e){
       error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
       echo 'Произошла ошибка. Попробуйте позже.';
       exit();
@@ -82,7 +82,7 @@ function isLogin($login) {
       $stmt = $databaseConnection->prepare("SELECT COUNT(*) FROM login_users WHERE login = ? GROUP BY login");
       $stmt->execute([$login]);
       return (int) $stmt->fetchColumn();
-  } catch (PDOException $exception){
+  } catch (PDOException $e){
     error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
     echo 'Произошла ошибка. Попробуйте позже.';
     exit();
@@ -97,7 +97,7 @@ function isRightPassword($login, $password) {
       $hash_passw = $stmt->fetchColumn();
 
       return $hash_passw && password_verify($password, $hash_passw); // Проверяем хеш
-  } catch (PDOException $exception){
+  } catch (PDOException $e){
     error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
     echo 'Произошла ошибка. Попробуйте позже.';
     exit();

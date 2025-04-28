@@ -16,7 +16,7 @@ function getADMIN_ID(){
         $adminIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
     }
-    catch (PDOException $exception){
+    catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -30,7 +30,7 @@ function getAdmin_log() {
         $stmt = $databaseConnection->prepare("SELECT login FROM login_users WHERE role='admin'");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    } catch (PDOException $e) {
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -54,7 +54,7 @@ function language_stats(){
                   "</td><td>" . htmlspecialchars($rowData->stat, ENT_QUOTES, 'UTF-8') . "</td></tr>";
         }
     }
-    catch (PDOException $exception){
+    catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -95,10 +95,10 @@ function users_table(){
             $rowContent .= "<td>$langsString</td>";
 
             $rowContent .= "<td class=\"buttons\">
-                    <form action="admin.php" method="POST">
-                        <input type="hidden" name="del_by_uid" value="<?= htmlspecialchars($userId) ?>">
-                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-                        <input class="delete_button" type="submit" value="УДАЛИТЬ">
+                    <form action=\"admin.php\" method=\"POST\">
+                        <input type=\"hidden\" name=\"del_by_uid\" value=\"htmlspecialchars($userId)\">
+                        <input type=\"hidden\" name=\"csrf_token\" value=\"<?= htmlspecialchars($_SESSION['csrf_token']) ?>\">
+                        <input class=\"delete_button\" type=\"submit\" value=\"УДАЛИТЬ\">
                     </form>;
 
             $rowContent .= "<br><div class=\"change_button\">
@@ -108,7 +108,7 @@ function users_table(){
             $userRows[] = $rowContent;
         }
     } 
-    catch (PDOException $exception){
+    catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -130,7 +130,7 @@ function del_by_uid($userId){
         $loginDelete->execute([$userId]);
         $userDelete->execute([$userId]);
       }
-    catch (PDOException $exception){
+    catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -144,7 +144,7 @@ function getUID($userLogin){
         $idStatement = $databaseConnection->prepare("SELECT user_id FROM login_users WHERE login=?");
         $idStatement->execute([$userLogin]);
         $userId = $idStatement->fetchColumn();
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -159,7 +159,7 @@ function getlogin($userId){
         $loginStatement = $databaseConnection->prepare("SELECT login FROM login_users WHERE user_id=?");
         $loginStatement->execute([$userId]);
         $userLogin = $loginStatement->fetchColumn();
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -187,7 +187,7 @@ function UPDATE($userId, $fullName, $phoneNumber, $emailAddress, $birthDate, $ge
                 $langInsert->execute([$userId, $langId]);
             }
         }
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -217,7 +217,7 @@ function INSERT($newLogin, $hashedPassword){
             $langInsert->execute([$newId, $langId]);
           }
         }
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -225,7 +225,7 @@ function INSERT($newLogin, $hashedPassword){
     try {
         $loginInsert = $databaseConnection->prepare("INSERT INTO login_users (login, password_hash, role, user_id ) VALUES (?, ?, ?, ?)");
         $loginInsert->execute([$newLogin, $hashedPassword, "user", $newId]);
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -245,7 +245,7 @@ function INSERTData($userLogin){
         foreach($fields as $field) {
             $fieldValues[$field] = htmlspecialchars($userData[$field], ENT_QUOTES, 'UTF-8');
         }
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
@@ -258,7 +258,7 @@ function INSERTData($userLogin){
         $userLangs = $langStatement->fetchAll(PDO::FETCH_COLUMN, 0);
         $langsString = implode(",", $userLangs);
         $fieldValues['favorite_languages'] = $langsString;
-    } catch (PDOException $exception){
+    } catch (PDOException $e){
         error_log('Database error in ' . __FUNCTION__ . ': ' . $e->getMessage());
         echo 'Произошла ошибка. Попробуйте позже.';
         exit();
