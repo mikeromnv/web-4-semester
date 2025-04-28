@@ -1,0 +1,119 @@
+html{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color:rgb(244, 244, 252);
+    font-family: "Mac";
+    background-image: url('../images/bckg.jpg');
+    background-size: cover;
+}
+a{
+    text-decoration: none;
+}
+body{
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:auto;
+    padding-right: auto;
+}
+
+table{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color: #84a352a6;
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding: 4px;
+}
+thead{
+    text-align: center;
+    font-weight: 600;
+    border-width: 4px;
+    border-spacing: 5px;
+}
+
+thead td{
+    background-color: #cb7134;;
+    margin-left: 5px;
+    padding: 10px;
+    color:rgb(0, 0, 0);
+    border: 1px solid;
+}
+tbody{
+    background-color: #84a352;
+    margin:-1px;
+}
+tbody td{
+    background-color: #84a352;
+    text-align: center;
+    padding: 10px;
+    color:rgb(47, 46, 66);
+    border: 1px solid;
+}
+
+.buttons{
+    padding:2px;
+    text-align: center;
+}
+.delete_button{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e13815;
+    border-radius: 3px;
+    color: rgb(0, 0, 0);
+    margin: 1px;
+    padding: 3px;
+}
+.change_button{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 3px;
+    background-color: #ade912;
+    border-radius: 3px;
+    color: rgb(0, 0, 0);
+    margin: 1px;
+}
+
+.message{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    border: 3px outset rgb(92, 171, 84);
+    border-radius: 3px;
+    background-color: #ade912;
+    color: rgb(44, 105, 50);
+    margin: 1px;
+}
+
+.logout_button{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e1c215;
+    border-radius: 3px;
+    color: rgb(0, 0, 0);
+    margin: 1px;
+    padding: 3px;
+    position: absolute;
+    top: 15;
+    right: 15;
+}
+
+.success_admin{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 7px;
+    justify-content: center;
+    width: auto;
+    max-width: fit-content;
+    background: rgb(255 161 0 / 63%);
+    box-shadow: 0 0 20px #adb3a9;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 20px;
+}
+
