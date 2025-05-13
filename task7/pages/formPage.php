@@ -21,7 +21,7 @@
       if (!empty($messages_log)) {
         print('<div id="is_login">');
         foreach ($messages_log as $message) {
-          print(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+          print($message);
         }
         print('</div>');
       }
