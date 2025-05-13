@@ -9,12 +9,6 @@ require_once 'functions/MyFunctions.php';
 // $db = new PDO('mysql:host=localhost;dbname=u68604', $user, $pass,
 //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-
-// Генерация CSRF-токена
-if (empty($_SESSION['csrf_token'])) {
-  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
 $all_languages=getAllLangs();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
