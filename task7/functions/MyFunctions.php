@@ -58,7 +58,40 @@ function makeCsrfToken() {
   return isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : ''; // Проверка существования
 }
 
+/**
+ * Валидирует CSRF-токен
+ * 
+ * @return bool Возвращает true если токен валиден, false если есть ошибка
+ */
+function validateCsrfToken() {
+  $submittedToken = $_POST['csrf_token'] ?? null;
+  if (empty($submittedToken)) {
+      error_log('CSRF Error: Missing token in POST data');
+      return false;
+  }
+  $storedToken = $_SESSION['csrf_token'] ?? null;
+  $tokenCreationTime = $_SESSION['csrf_token_time'] ?? 0;
+  
+  if (empty($storedToken)) {
+      error_log('CSRF Error: Missing token in session');
+      return false;
+  }
+  if (!hash_equals($storedToken, $submittedToken)) {
+      error_log('CSRF Error: Token mismatch');
+      return false;
+  }
+  $tokenAge = time() - $tokenCreationTime;
+  $maxTokenAge = 3600; // 1 час в секундах
+  
+  if ($tokenAge > $maxTokenAge) {
+      error_log('CSRF Error: Token expired (age: ' . $tokenAge . 's)');
+      return false;
+  }
+  unset($_SESSION['csrf_token']);
+  unset($_SESSION['csrf_token_time']);
 
+  return true;
+}
 
 
 function AdminPassword($login, $password) {

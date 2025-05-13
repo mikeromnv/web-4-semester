@@ -164,18 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('pages/formPage.php');
 }
 else {
-  // Валидация CSRF-токена 
-  if (empty($_POST['csrf_token'])) {
-    die('Пустой POST-csrf_token');
-  } 
-  else if (empty($_SESSION['csrf_token']) || empty($_SESSION['csrf_token_time'])) {
-    die('Пустой _SESSION-csrf_token');
-  } 
-  else if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    die('Ошибка безопасности: недействительный CSRF-токен');
-  }
-  else if (time() - $_SESSION['csrf_token_time'] > 1800) {
-    die('CSRF-токен устарел');
+  if (!validateCsrfToken()) {
+    http_response_code(403); 
+   
   }
     
 
