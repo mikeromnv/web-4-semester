@@ -172,10 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   // Валидация CSRF-токена 
   if (empty($_POST['csrf_token']) || empty($_SESSION['csrf_token']) || 
-        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+  $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die('Ошибка безопасности: недействительный CSRF-токен');
     }
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    
 
   // Проверяем ошибки.
   $errors_validate = FALSE;
