@@ -39,6 +39,12 @@ function AdminLogin($login) {
 }
 
 function makeCsrfToken() {
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+
+  $token = null;
+
   if (empty($_SESSION['csrf_token']) || time() - $_SESSION['csrf_token_time'] > 1800) { // 30 мин
     if (function_exists('random_bytes')) {
       $token = bin2hex(random_bytes(32));
@@ -48,8 +54,11 @@ function makeCsrfToken() {
     $_SESSION['csrf_token'] = $token;
     $_SESSION['csrf_token_time'] = time();
   }
-  return $token;
+
+  return isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : ''; // Проверка существования
 }
+
+
 
 
 function AdminPassword($login, $password) {
