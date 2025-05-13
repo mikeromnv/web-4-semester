@@ -38,6 +38,17 @@ function AdminLogin($login) {
     return $check;
 }
 
+function makeCsrfToken() {
+  if (function_exists('random_bytes')) {
+    $token = bin2hex(random_bytes(32));
+  } else {
+    $token = md5(uniqid(rand(), true)); 
+  }
+  $_SESSION['csrf_token'] = $token;
+  $_SESSION['csrf_token_time'] = time();
+  return $token;
+}
+
 function AdminPassword($login, $password) {
     global $databaseConnection;
     $passw;
