@@ -39,15 +39,18 @@ function AdminLogin($login) {
 }
 
 function makeCsrfToken() {
-  if (function_exists('random_bytes')) {
-    $token = bin2hex(random_bytes(32));
-  } else {
-    $token = md5(uniqid(rand(), true)); 
+  if (empty($_SESSION['csrf_token']) || time() - $_SESSION['csrf_token_time'] > 1800) { // 30 мин
+    if (function_exists('random_bytes')) {
+      $token = bin2hex(random_bytes(32));
+    } else {
+      $token = md5(uniqid(rand(), true));
+    }
+    $_SESSION['csrf_token'] = $token;
+    $_SESSION['csrf_token_time'] = time();
   }
-  $_SESSION['csrf_token'] = $token;
-  $_SESSION['csrf_token_time'] = time();
   return $token;
 }
+
 
 function AdminPassword($login, $password) {
     global $databaseConnection;

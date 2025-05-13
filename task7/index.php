@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if ($_COOKIE['fio_error']==2){
        $messages['fio'] = 'ФИО должно быть короче 150 символов';
       }
-      if ($_COOKIE['fio_error']==3){
+      else if ($_COOKIE['fio_error']==3){
        $messages['fio'] = 'ФИО может содержать только только буквы и пробелы';
       }
       else{
@@ -165,8 +165,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else {
   // Валидация CSRF-токена 
-  if (empty($_POST['csrf_token']) || empty($_SESSION['csrf_token']) || 
-  $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+  if (empty($_POST['csrf_token'])){
+    die('Пустой POST-csrf_token');
+  }
+  else if ( empty($_SESSION['csrf_token'])) {
+    die('Пустой _SESSION-csrf_token');
+  }
+  else (   $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die('Ошибка безопасности: недействительный CSRF-токен');
     }
     

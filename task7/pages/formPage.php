@@ -34,7 +34,7 @@
         <?php if (!empty($values['uid'])): ?>
         <input type="hidden" name="uid" value="<?= $values['uid'] ?>">
         <?php endif; ?>
-
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(makeCsrfToken()); ?>">
 
             <label>ФИО <br /><span class="error"><?php echo isset($errors['fio']) ? $messages['fio'] : ''; ?></span> <br/>
               <input type="text" 
@@ -124,7 +124,7 @@
           </label> 
             <br /><span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br /></span>
             
-            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(makeCsrfToken()); ?>">
+            
             
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
