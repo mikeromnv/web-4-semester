@@ -123,6 +123,9 @@
             
           </label> 
             <br /><span class="error"><?php echo isset($errors['contract']) ? $messages['contract'] : ''; ?>  <br /></span>
+            
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            
             <input name="submit_button" type="submit" value="Сохранить">
         </form>
     </div>

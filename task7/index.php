@@ -10,6 +10,11 @@ require_once 'functions/MyFunctions.php';
 //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
+// Генерация CSRF-токена
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $all_languages=getAllLangs();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -156,7 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $_SESSION['uid']=getUID($_SESSION['login']);
 
     $values=INSERTData($_SESSION['login']);
-    $login_message='Вход с логином: '. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
+
+    $login_message='Успешно!'; //. $_SESSION['login'] . ", uid: ". $_SESSION['uid'];
     $messages[] = $login_message;
   }
   
@@ -164,6 +170,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('pages/formPage.php');
 }
 else {
+  // Валидация CSRF-токена 
+  if (empty($_POST['csrf_token']) || empty($_SESSION['csrf_token']) || 
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die('Ошибка безопасности: недействительный CSRF-токен');
+    }
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
   // Проверяем ошибки.
   $errors_validate = FALSE;
